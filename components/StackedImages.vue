@@ -1,8 +1,8 @@
-import type { Power2 } from 'gsap';
+
 <template>
     <div class="container">
         <!-- Loader -->
-        <div v-if="!imagesLoaded" class="loader">Loading...</div>
+        <!-- <div v-if="!imagesLoaded" class="loader">Loading...</div> -->
 
         <!-- Image Container -->
         <div class="text-[96px] font-dancing absolute preloader-header overflow-hidden text-[#E6E3DC] ">
@@ -17,13 +17,17 @@ import type { Power2 } from 'gsap';
 </template>
 
 <script setup>
-import gsap from "gsap";
-import { ref, onMounted } from "vue";
+import gsap, { Power2 } from "gsap";
+import CustomEase from "gsap/CustomEase";
 
+import { ref, onMounted } from "vue";
+gsap.registerPlugin(CustomEase);
+// Register CustomEase
+CustomEase.create("customEase", "0.86,0,0.07,1");
 const images = [
     "/images/preload-img/img-1.png",
-    "/images/preload-img/img-2.png",
-    "/images/preload-img/img-3.png",
+    // "/images/preload-img/img-2.png",
+    // "/images/preload-img/img-3.png",
     "/images/preload-img/img-4.png",
 ];
 
@@ -31,7 +35,7 @@ const imagesLoaded = ref(false);
 const loadedImagesCount = ref(0);
 
 // Custom bezier curve for spring-like animation
-const springBezier = [0.68, -0.55, 0.265, 1.55];
+const springBezier = [0.77, 0, 0.18, 1];
 
 // Function to check if all images are loaded
 const onImageLoad = () => {
@@ -51,21 +55,22 @@ watch(imagesLoaded, (newValue) => {
 // Function to start the animation
 const startAnimation = () => {
     const tl = gsap.timeline();
-    const overlap = 2; // Seconds between animation starts
+    const overlap = 0.5; // Seconds between animation starts
     tl.to(`.image-container`, {
         clipPath: "inset(0% 0 0 0 0)",
         duration: 0.7,
-        ease: springBezier,
+        ease: "power4.inOut",
     });
     // Loop through each image and apply the animation
     images.forEach((_, index) => {
         tl.fromTo(
             `.image-wrapper:nth-child(${index + 1}) .image`,
-            { clipPath: "inset(100% 0 0 0)" }, // Start with the image fully clipped (bottom to top)
+            { clipPath: "inset(100% 0 0 0)", zoom: 1.1 }, // Start with the image fully clipped (bottom to top)
             {
                 clipPath: "inset(0% 0 0 0)",
+                zoom: 1,
                 duration: 0.7,
-                ease: springBezier, // Use custom bezier curve
+                ease: "customEase", // Use custom bezier curve
             },
             index * overlap // Delay the start of each animation based on the overlap
         );
@@ -75,12 +80,17 @@ const startAnimation = () => {
     tl.to(`.image-container`, {
         clipPath: "inset(0 0 100% 0)",
         duration: 0.7,
-        ease: springBezier,
+        ease: "customEase",
     });
     tl.to(`.preloader-header`, {
         y: 0,
         duration: 0.7,
-        ease: springBezier,
+        ease: "customEase",
+    });
+    tl.to(`.preloader_container`, {
+        y: "-100%",
+        duration: 0.7,
+        ease: "customEase",
     });
 };
 </script>

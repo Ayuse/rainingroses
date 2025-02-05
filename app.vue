@@ -13,6 +13,10 @@ useHead({
             rel: 'stylesheet',
             href: 'https://fonts.googleapis.com/css2?family=Dancing+Script:wght@400;500;600;700&display=swap',
         },
+        {
+            rel: 'stylesheet',
+            href: 'https://fonts.googleapis.com/css2?family=Italiana:wght@400;500;600;700&display=swap',
+        },
     ],
 });
 </script>

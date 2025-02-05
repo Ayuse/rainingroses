@@ -3,6 +3,7 @@ export default {
     extend: {
       fontFamily: {
         dancing: ["Dancing Script", "cursive"],
+        italiana: ["Italiana", "cursive"],
       },
     },
   },
