@@ -12,7 +12,11 @@
     <div
       class="flex flex-col md:h-[456px] h-[300px] md:w-full w-[300px] relative overflow-hidden items-center image-container"
     >
-      <div v-for="(img, index) in images" :key="index" class="image-wrapper">
+      <div
+        v-for="(img, index) in images"
+        :key="index"
+        class="image-wrapper overflow-hidden"
+      >
         <NuxtImg
           :src="img"
           class="image"
