@@ -4,6 +4,7 @@ export default {
       fontFamily: {
         dancing: ["Dancing Script", "cursive"],
         italiana: ["Italiana", "cursive"],
+        inter: ["Inter", "sans-serif"],
       },
     },
   },

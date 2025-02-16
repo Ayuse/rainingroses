@@ -146,6 +146,7 @@
         </NuxtLink>
       </div>
     </div>
+    <PagesView />
   </div>
 </template>
 
