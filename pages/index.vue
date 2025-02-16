@@ -3,7 +3,7 @@
 <template>
   <div class="h-screen w-screen bg-[#E6E3DC] relative">
     <div
-      class="h-screen w-screen bg-[#444444] text-white flex items-center justify-center preloader_container absolute z-10"
+      class="h-screen w-screen bg-[#444444] text-white flex items-center justify-center preloader_container absolute z-40"
     >
       <StackedImages />
     </div>
