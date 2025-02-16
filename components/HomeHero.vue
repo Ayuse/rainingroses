@@ -41,103 +41,109 @@
 
     <div class="mt-20">
       <div class="flex flex-col md:flex-row items-center justify-between gap-4">
-        <div
-          class="w-[412px] md:w-[385px] h-[463px] overflow-hidden md:mt-0 mt-10 rounded-lg relative page-card-container"
-          @mouseenter="handleMouseEnter"
-          @mouseleave="handleMouseLeave"
-        >
+        <NuxtLink to="/musings" class="block">
           <div
-            class="absolute top-0 left-0 w-full h-full bg-black/20 hpi-overlay z-10"
-          ></div>
-          <div
-            class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 flex flex-col z-20"
+            class="w-[412px] md:w-[385px] h-[463px] overflow-hidden md:mt-0 mt-10 rounded-lg relative page-card-container cursor-pointer"
+            @mouseenter="handleMouseEnter"
+            @mouseleave="handleMouseLeave"
           >
-            <div class="overflow-hidden">
-              <h2
-                class="text-[96px] font-italiana text-white page-title flex h-[120px]"
-              >
-                Musings
-              </h2>
+            <div
+              class="absolute top-0 left-0 w-full h-full bg-black/20 hpi-overlay z-10"
+            ></div>
+            <div
+              class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 flex flex-col z-20"
+            >
+              <div class="overflow-hidden">
+                <h2
+                  class="text-[96px] font-italiana text-white page-title flex items-center h-[120px]"
+                >
+                  Musings
+                </h2>
+              </div>
+              <div class="overflow-hidden">
+                <h3
+                  class="text-[16px] font-inter italic font-light text-white page-subheader"
+                >
+                  Fleeting thoughts, insights, and moments of inspirations.
+                </h3>
+              </div>
             </div>
-            <div class="overflow-hidden">
-              <h3
-                class="text-[16px] font-inter italic font-light text-white page-subheader"
-              >
-                Fleeting thoughts, insights, and moments of inspirations.
-              </h3>
-            </div>
-          </div>
 
-          <NuxtImg
-            src="/images/musings.jpeg"
-            class="home-page-img w-full h-full"
-            fit="cover"
-          />
-        </div>
-        <div
-          class="w-[412px] md:w-[385px] h-[463px] overflow-hidden md:mt-0 mt-10 rounded-lg relative page-card-container"
-          @mouseenter="handleMouseEnter"
-          @mouseleave="handleMouseLeave"
-        >
-          <div
-            class="absolute top-0 left-0 w-full h-full bg-black/20 hpi-overlay z-10"
-          ></div>
-          <div
-            class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 flex flex-col z-20"
-          >
-            <div class="overflow-hidden">
-              <h2
-                class="text-[96px] font-italiana text-white page-title flex h-[120px]"
-              >
-                Fictional
-              </h2>
-            </div>
-            <div class="overflow-hidden">
-              <h3
-                class="text-[16px] font-inter italic font-light text-white page-subheader"
-              >
-                A collection of my thoughts and reflections
-              </h3>
-            </div>
+            <NuxtImg
+              src="/images/musings.jpeg"
+              class="home-page-img w-full h-full"
+              fit="cover"
+            />
           </div>
-          <NuxtImg
-            src="/images/fictional.jpeg"
-            class="home-page-img w-full h-full"
-            fit="cover"
-          />
-        </div>
-        <div
-          class="w-[412px] md:w-[385px] h-[463px] overflow-hidden md:mt-0 mt-10 rounded-lg relative page-card-container"
-          @mouseenter="handleMouseEnter"
-          @mouseleave="handleMouseLeave"
-        >
+        </NuxtLink>
+        <NuxtLink to="/fictional" class="block">
           <div
-            class="absolute top-0 left-0 w-full h-full bg-black/20 hpi-overlay z-10"
-          ></div>
-          <div
-            class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 flex flex-col z-20"
+            class="w-[412px] md:w-[385px] h-[463px] overflow-hidden md:mt-0 mt-10 rounded-lg relative page-card-container cursor-pointer"
+            @mouseenter="handleMouseEnter"
+            @mouseleave="handleMouseLeave"
           >
-            <div class="overflow-hidden">
-              <h2
-                class="text-[96px] font-italiana text-white page-title flex h-[120px]"
-              >
-                Vault
-              </h2>
+            <div
+              class="absolute top-0 left-0 w-full h-full bg-black/20 hpi-overlay z-10"
+            ></div>
+            <div
+              class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 flex flex-col z-20"
+            >
+              <div class="overflow-hidden">
+                <h2
+                  class="text-[96px] font-italiana text-white page-title flex items-center h-[120px]"
+                >
+                  Fictional
+                </h2>
+              </div>
+              <div class="overflow-hidden">
+                <h3
+                  class="text-[16px] font-inter italic font-light text-white page-subheader"
+                >
+                  A collection of my thoughts and reflections
+                </h3>
+              </div>
             </div>
-            <div class="overflow-hidden">
-              <h3
-                class="text-[16px] font-inter italic font-light text-white page-subheader"
-              >
-                A collection of my thoughts and reflections
-              </h3>
-            </div>
+            <NuxtImg
+              src="/images/fictional.jpeg"
+              class="home-page-img w-full h-full"
+              fit="cover"
+            />
           </div>
-          <NuxtImg
-            src="/images/vault.jpeg"
-            class="home-page-img w-full h-full"
-            fit="cover"
-          />
-        </div>
+        </NuxtLink>
+        <NuxtLink to="/vault" class="block">
+          <div
+            class="w-[412px] md:w-[385px] h-[463px] overflow-hidden md:mt-0 mt-10 rounded-lg relative page-card-container cursor-pointer"
+            @mouseenter="handleMouseEnter"
+            @mouseleave="handleMouseLeave"
+          >
+            <div
+              class="absolute top-0 left-0 w-full h-full bg-black/20 hpi-overlay z-10"
+            ></div>
+            <div
+              class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 flex flex-col z-20"
+            >
+              <div class="overflow-hidden">
+                <h2
+                  class="text-[96px] font-italiana text-white page-title flex items-center h-[120px]"
+                >
+                  Vault
+                </h2>
+              </div>
+              <div class="overflow-hidden">
+                <h3
+                  class="text-[16px] font-inter italic font-light text-white page-subheader"
+                >
+                  A collection of my thoughts and reflections
+                </h3>
+              </div>
+            </div>
+            <NuxtImg
+              src="/images/vault.jpeg"
+              class="home-page-img w-full h-full"
+              fit="cover"
+            />
+          </div>
+        </NuxtLink>
       </div>
     </div>
   </div>
@@ -265,18 +271,44 @@ onMounted(() => {
 
 const handleMouseEnter = (event) => {
   const img = event.currentTarget.querySelector(".home-page-img");
+  const subheaderWords = event.currentTarget.querySelectorAll(
+    ".page-subheader .word"
+  );
+
   gsap.to(img, {
     scale: 1.1,
     duration: 0.3,
+    ease: "cubic-bezier(0.175, 0.885, 0.32, 1.275)",
+  });
+
+  gsap.to(subheaderWords, {
+    // y: "0%",
+    opacity: 1,
+    filter: "blur(0px)",
+    duration: 0.3,
+    stagger: 0.05,
     ease: "cubic-bezier(0.175, 0.885, 0.32, 1.275)",
   });
 };
 
 const handleMouseLeave = (event) => {
   const img = event.currentTarget.querySelector(".home-page-img");
+  const subheaderWords = event.currentTarget.querySelectorAll(
+    ".page-subheader .word"
+  );
+
   gsap.to(img, {
     scale: 1,
     duration: 0.3,
+    ease: "cubic-bezier(0.175, 0.885, 0.32, 1.275)",
+  });
+
+  gsap.to(subheaderWords, {
+    // y: "100%",
+    opacity: 0,
+    filter: "blur(4px)",
+    duration: 0.3,
+    stagger: -0.05,
     ease: "cubic-bezier(0.175, 0.885, 0.32, 1.275)",
   });
 };
@@ -314,5 +346,9 @@ const handleMouseLeave = (event) => {
 
 .page-card-container .home-page-img {
   transform: scale(1);
+}
+
+.page-subheader .word {
+  filter: blur(4px);
 }
 </style>
