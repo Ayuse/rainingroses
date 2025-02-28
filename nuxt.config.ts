@@ -2,7 +2,16 @@
 export default defineNuxtConfig({
   compatibilityDate: "2024-11-01",
   devtools: { enabled: true },
-  modules: ["@nuxtjs/tailwindcss", "@nuxt/image"],
+  modules: [
+    "@nuxtjs/tailwindcss",
+    "@nuxt/image",
+    "nuxt-locomotive-scroll",
+    "@nuxtjs/sanity",
+  ],
+  sanity: {
+    projectId: "eg0gyf3y",
+    dataset: "production",
+  },
   image: {
     presets: {
       default: {

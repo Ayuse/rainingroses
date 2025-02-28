@@ -2,39 +2,76 @@
   <div
     class="max-w-[1204px] m-auto px-5 h-full py-5 md:py-40 mt-24 border-t-[#A09F9B] border-t-[1px] border-b-[1px] flex gap-4"
   >
-    <div class="w-[550px]">
+    <div
+      v-for="(page, index) in pages"
+      :key="index"
+      class="place-content-start"
+    >
       <div class="flex justify-between py-5">
         <div class="flex flex-col">
-          <h2 class="font-italiana font-light text-[48px]">Code Red</h2>
+          <h2 class="font-italiana font-light text-[48px]">{{ page.title }}</h2>
           <p class="font-inter text-[16px] font-light italic">
-            In Serious Toruble
+            {{ page.subtitle }}
           </p>
         </div>
         <h3 class="font-inter text-[16px] font-light italic place-self-end">
-          3 min read
+          {{ page.readTime }}
         </h3>
       </div>
 
       <NuxtImg
-        src="/images/code-red.png"
-        class="w-full h-[700px] object-cover"
+        :src="page.image"
+        class="w-full object-cover transition-all duration-300 image-reveal hover:h-[700px] h-[580px]"
       />
-    </div>
-
-    <div class="w-[550px] place-content-end">
-      <div class="flex justify-between py-5">
-        <div class="flex flex-col">
-          <h2 class="font-italiana font-light text-[48px]">Sister Unity</h2>
-          <p class="font-inter text-[16px] font-light italic">
-            The weight of a lifetime
-          </p>
-        </div>
-        <h3 class="font-inter text-[16px] font-light italic place-self-end">
-          3 min read
-        </h3>
-      </div>
-
-      <NuxtImg src="/images/sister.png" class="w-full h-[580px] object-cover" />
     </div>
   </div>
 </template>
+
+<script setup>
+import { onMounted } from "vue";
+import gsap from "gsap";
+import ScrollTrigger from "gsap/ScrollTrigger";
+
+const pages = [
+  {
+    title: "Code Red",
+    subtitle: "In Serious Toruble",
+    readTime: "3 min read",
+    image: "/images/code-red.png",
+  },
+  {
+    title: "Sister Unity",
+    subtitle: "The weight of a lifetime",
+    readTime: "3 min read",
+    image: "/images/sister.png",
+  },
+  {
+    title: "Sister Unity",
+    subtitle: "The weight of a lifetime",
+    readTime: "3 min read",
+    image: "/images/sister.png",
+  },
+];
+
+onMounted(() => {
+  gsap.registerPlugin(ScrollTrigger);
+
+  gsap.from(".image-reveal", {
+    clipPath: "inset(0)",
+    duration: 1.2,
+    stagger: 0.5,
+    ease: "power4.out",
+    scrollTrigger: {
+      trigger: ".image-reveal",
+      start: "top bottom-=100",
+      toggleActions: "play none none reverse",
+    },
+  });
+});
+</script>
+
+<style scoped>
+.image-reveal {
+  clip-path: inset(100% 0 0 0);
+}
+</style>
