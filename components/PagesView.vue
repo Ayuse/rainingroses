@@ -1,10 +1,12 @@
 <template>
   <div
-    class="max-w-[1204px] m-auto px-5 h-full py-5 md:py-40 mt-24 border-t-[#A09F9B] border-t-[1px] border-b-[1px] flex gap-4"
+    class="max-w-[1204px] h-[718px] m-auto px-5 py-5 mt-24 border-t-[#A09F9B] border-t-[1px] border-b-[1px] flex flex-col md:flex-row gap-4 hover:h-[800px] transition-all duration-300 page-view"
+    style="min-height: 100vh"
   >
-    <div
+    <NuxtLink
       v-for="(page, index) in pages"
       :key="index"
+      :to="`/post/${page.slug}`"
       class="place-content-start"
     >
       <div class="flex justify-between py-5">
@@ -23,7 +25,7 @@
         :src="page.image"
         class="w-full object-cover transition-all duration-300 image-reveal hover:h-[700px] h-[580px]"
       />
-    </div>
+    </NuxtLink>
   </div>
 </template>
 
@@ -38,40 +40,88 @@ const pages = [
     subtitle: "In Serious Toruble",
     readTime: "3 min read",
     image: "/images/code-red.png",
+    slug: "code-red",
   },
   {
     title: "Sister Unity",
     subtitle: "The weight of a lifetime",
     readTime: "3 min read",
     image: "/images/sister.png",
+    slug: "sister-unity",
   },
   {
     title: "Sister Unity",
     subtitle: "The weight of a lifetime",
     readTime: "3 min read",
     image: "/images/sister.png",
+    slug: "sister-unity",
   },
 ];
 
 onMounted(() => {
-  gsap.registerPlugin(ScrollTrigger);
+  console.log("Component mounted, setting up ScrollTrigger");
 
-  gsap.from(".image-reveal", {
-    clipPath: "inset(0)",
-    duration: 1.2,
-    stagger: 0.5,
-    ease: "power4.out",
-    scrollTrigger: {
-      trigger: ".image-reveal",
-      start: "top bottom-=100",
-      toggleActions: "play none none reverse",
-    },
-  });
+  setTimeout(() => {
+    const triggerElement = document.querySelector(".page-view");
+    console.log("Trigger element height:", triggerElement?.offsetHeight);
+    console.log(
+      "Trigger element position:",
+      triggerElement?.getBoundingClientRect()
+    );
+
+    // Create timeline first
+    const tl = gsap.timeline({
+      scrollTrigger: {
+        trigger: ".page-view",
+        start: "top center",
+        markers: true,
+        toggleActions: "play none none reverse", // Play on enter, reverse on leave
+      },
+    });
+
+    // Add animations to timeline
+    tl.fromTo(
+      ".image-reveal",
+      {
+        clipPath: "inset(100% 0 0 0)",
+        opacity: 0,
+      },
+      {
+        clipPath: "inset(0)",
+        opacity: 1,
+        duration: 1,
+        stagger: 0.2,
+        ease: "power2.inOut",
+      }
+    ).fromTo(
+      [".page-view h2", ".page-view h3", ".page-view p"],
+      {
+        opacity: 0,
+        y: 50,
+      },
+      {
+        opacity: 1,
+        y: 0,
+        duration: 0.5,
+        stagger: 0.2,
+        ease: "power2.out",
+      },
+      "-=0.5" // Start text animation before images finish
+    );
+
+    ScrollTrigger.refresh();
+  }, 100);
 });
 </script>
 
 <style scoped>
-.image-reveal {
-  clip-path: inset(100% 0 0 0);
+.page-view {
+  position: relative;
+  width: 100%;
+  min-height: 100vh;
 }
+
+/* .image-reveal {
+  visibility: hidden;
+} */
 </style>

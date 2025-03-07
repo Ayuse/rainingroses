@@ -1,16 +1,6 @@
 <template>
-  <div>
-    <div class="max-w-[1204px] m-auto px-5 h-full py-5 md:py-0">
-      <nav
-        class="hidden md:flex justify-around text-[#000000] text-[20px] font-italiana max-w-[800px] m-auto pt-8 nav-links"
-      >
-        <nuxt-link to="/">Home</nuxt-link>
-        <nuxt-link to="/diary">Fictional Diary</nuxt-link>
-        <nuxt-link to="/musings">Musings</nuxt-link>
-        <nuxt-link to="/vault">Book Vault</nuxt-link>
-        <nuxt-link to="/about">About</nuxt-link>
-      </nav>
-
+  <div class="">
+    <div class="bg-[#E6E3DC] m-auto px-5 h-full py-5 md:py-0">
       <div class="flex flex-col md:flex-row items-center justify-between mt-20">
         <div class="font-dancing text-[#212122] relative">
           <div
@@ -156,7 +146,6 @@
       <PagesView />
       <AboutHome />
     </div>
-    <Footer />
   </div>
 </template>
 
@@ -308,10 +297,15 @@ const handleMouseLeave = (event) => {
     ".page-subheader .word"
   );
 
+  // Kill any existing animations
+  gsap.killTweensOf([img, subheaderWords]);
+
   gsap.to(img, {
     scale: 1,
     duration: 0.3,
     ease: "cubic-bezier(0.175, 0.885, 0.32, 1.275)",
+    overwrite: true,
+    force3D: true,
   });
 
   gsap.to(subheaderWords, {
@@ -321,35 +315,17 @@ const handleMouseLeave = (event) => {
     duration: 0.3,
     stagger: -0.05,
     ease: "cubic-bezier(0.175, 0.885, 0.32, 1.275)",
+    overwrite: true,
+    force3D: true,
   });
 };
 </script>
 
 <style>
-.nav-links a {
-  position: relative;
-  text-decoration: none;
-  opacity: 0;
-}
-
 .rose-container,
 .char,
 .word {
   opacity: 0;
-}
-.nav-links a::after {
-  content: "";
-  position: absolute;
-  width: 0;
-  height: 3px;
-  bottom: -4px;
-  left: 0;
-  background-color: #dbc9bd;
-  transition: width 0.3s ease;
-}
-
-.nav-links a:hover::after {
-  width: 100%;
 }
 /* .page-subheader {
   display: none;

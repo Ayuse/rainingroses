@@ -5,7 +5,7 @@
 
     <!-- Image Container -->
     <div
-      class="text-[clamp(48px,8vw,96px)] font-dancing absolute preloader-header overflow-hidden text-[#E6E3DC]"
+      class="text-[clamp(48px,8vw,96px)] font-dancing fixed preloader-header overflow-hidden text-[#E6E3DC]"
     >
       <h1 class="translate-y-full preloader-header">Raining Roses</h1>
     </div>

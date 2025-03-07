@@ -23,4 +23,10 @@ export default defineNuxtConfig({
       },
     },
   },
+  router: {
+    middleware: ["pageTransition"],
+  },
+  app: {
+    pageTransition: { name: "page", mode: "out-in" },
+  },
 });
