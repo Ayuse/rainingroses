@@ -31,8 +31,7 @@
 
 <script setup>
 import { onMounted } from "vue";
-import gsap from "gsap";
-import ScrollTrigger from "gsap/ScrollTrigger";
+import { useGSAP } from "~/composables/useGSAP";
 
 const pages = [
   {
@@ -58,7 +57,11 @@ const pages = [
   },
 ];
 
-onMounted(() => {
+onMounted(async () => {
+  const { gsap, ScrollTrigger } = await useGSAP();
+
+  if (!ScrollTrigger) return; // Guard clause for SSR
+
   console.log("Component mounted, setting up ScrollTrigger");
 
   setTimeout(() => {
@@ -69,17 +72,15 @@ onMounted(() => {
       triggerElement?.getBoundingClientRect()
     );
 
-    // Create timeline first
     const tl = gsap.timeline({
       scrollTrigger: {
         trigger: ".page-view",
         start: "top center",
-        markers: true,
-        toggleActions: "play none none reverse", // Play on enter, reverse on leave
+        // markers: true,
+        toggleActions: "play none none reverse",
       },
     });
 
-    // Add animations to timeline
     tl.fromTo(
       ".image-reveal",
       {
@@ -89,8 +90,8 @@ onMounted(() => {
       {
         clipPath: "inset(0)",
         opacity: 1,
-        duration: 1,
-        stagger: 0.2,
+        duration: 1.5,
+        stagger: 0.3,
         ease: "power2.inOut",
       }
     ).fromTo(
@@ -102,11 +103,11 @@ onMounted(() => {
       {
         opacity: 1,
         y: 0,
-        duration: 0.5,
+        duration: 1,
         stagger: 0.2,
         ease: "power2.out",
       },
-      "-=0.5" // Start text animation before images finish
+      "-=0.5"
     );
 
     ScrollTrigger.refresh();

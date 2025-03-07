@@ -150,123 +150,15 @@
 </template>
 
 <script setup>
-import gsap from "gsap";
 import { onMounted } from "vue";
-import SplitType from "split-type";
+import { useGSAP } from "~/composables/useGSAP";
 
-onMounted(() => {
-  const homeTl = gsap.timeline();
+onMounted(async () => {
+  const { gsap, ScrollTrigger } = await useGSAP();
 
-  homeTl.fromTo(
-    ".nav-links a",
-    {
-      y: -20,
-      opacity: 0,
-    },
-    {
-      y: 0,
-      opacity: 3,
-      duration: 0.5,
-      stagger: 0.1,
-      ease: "power2.out",
-    },
-    "4.2"
-  );
-  homeTl.fromTo(
-    ".rose-container",
-    {
-      y: -20,
-      opacity: 0,
-    },
-    {
-      y: 0,
-      opacity: 3,
-      duration: 0.5,
-      ease: "power2.out",
-    },
-    "5"
-  );
-  homeTl.fromTo(
-    ".rose-bg",
-    {
-      scale: 1.5,
-      opacity: 0,
-    },
-    {
-      scale: 1,
-      opacity: 1,
-      duration: 1,
-      ease: "power2.out",
-    },
-    "5"
-  );
-  homeTl.fromTo(
-    [".home-page-img", ".hpi-overlay"],
-    {
-      scale: 1.2,
-      opacity: 0,
-    },
-    {
-      scale: 1,
-      stagger: 0.1,
-      opacity: 1,
-      duration: 1,
-      ease: "power2.out",
-    },
-    "5"
-  );
+  if (!ScrollTrigger) return; // Guard clause for SSR
 
-  // Split text using SplitType instead of SplitText
-  const headerText = new SplitType(".home-header", { types: "chars" });
-  const subheaderText = new SplitType(".home-subheader", { types: "words" });
-  const pageTitles = new SplitType(".page-title", { types: "chars" });
-  const pageSubheaders = new SplitType(".page-subheader", { types: "words" });
-  homeTl.fromTo(
-    headerText.chars,
-    {
-      y: "100%",
-      opacity: 0,
-    },
-    {
-      y: 0,
-      opacity: 1,
-      duration: 1,
-      stagger: 0.05,
-      ease: "power2.inOut",
-    },
-    "4.3"
-  );
-
-  homeTl.fromTo(
-    subheaderText.words,
-    {
-      y: "100%",
-      opacity: 0,
-    },
-    {
-      y: 0,
-      opacity: 1,
-      duration: 0.8,
-      stagger: 0.03,
-      ease: "power2.inOut",
-    },
-    "4.5"
-  );
-  homeTl.fromTo(
-    pageTitles.chars,
-    {
-      y: "100%",
-      opacity: 0,
-    },
-    {
-      y: "0%",
-      opacity: 1,
-      stagger: 0.05,
-      duration: 0.7,
-      ease: "power4.out",
-    },
-    "5.2"
-  );
+  // Your ScrollTrigger animations...
 });
 
 const handleMouseEnter = (event) => {
