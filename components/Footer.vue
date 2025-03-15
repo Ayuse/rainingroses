@@ -1,11 +1,11 @@
 <template>
   <footer
-    class="bg-[#212122] text-[#E6E3DC] py-20 flex flex-col gap-10 h-[50vh] sticky bottom-0 -z-10"
+    class="bg-[#212122] text-[#E6E3DC] px-6 md:px-10 py-20 flex flex-col gap-10 h-[50vh] sticky bottom-0 -z-10"
     data-scroll
     data-scroll-speed="-0.2"
   >
     <div data-scroll data-scroll-speed="1">
-      <h2 class="font-italiana mx-auto text-center text-[48px]">
+      <h2 class="font-italiana mx-auto text-center text-[clamp(32px,8vw,48px)]">
         Join the Discussion
       </h2>
       <h3 class="font-inter text-center text-[16px] font-[200]">
