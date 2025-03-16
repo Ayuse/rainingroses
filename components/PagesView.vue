@@ -1,7 +1,6 @@
 <template>
   <div
     class="max-w-[1204px] h-[718px] m-auto px-5 py-5 mt-24 border-t-[#A09F9B] border-t-[1px] border-b-[1px] flex flex-col md:flex-row gap-4 hover:h-[800px] transition-all duration-300 page-view"
-    style="min-height: 100vh"
   >
     <NuxtLink
       v-for="(page, index) in pages"
@@ -75,9 +74,8 @@ onMounted(async () => {
     const tl = gsap.timeline({
       scrollTrigger: {
         trigger: ".page-view",
-        start: "top center",
-        // markers: true,
-        toggleActions: "play none none reverse",
+        start: "top +900",
+        toggleActions: "play none none none",
       },
     });
 
@@ -90,8 +88,8 @@ onMounted(async () => {
       {
         clipPath: "inset(0)",
         opacity: 1,
-        duration: 1.5,
-        stagger: 0.3,
+        duration: 0.3,
+        stagger: 0.1,
         ease: "power2.inOut",
       }
     ).fromTo(
@@ -103,11 +101,10 @@ onMounted(async () => {
       {
         opacity: 1,
         y: 0,
-        duration: 1,
-        stagger: 0.2,
-        ease: "power2.out",
-      },
-      "-=0.5"
+        duration: 0.3,
+        stagger: 0.1,
+        ease: "power2.inOut",
+      }
     );
 
     ScrollTrigger.refresh();
@@ -119,7 +116,7 @@ onMounted(async () => {
 .page-view {
   position: relative;
   width: 100%;
-  min-height: 100vh;
+  /* min-height: 100vh; */
 }
 
 /* .image-reveal {
