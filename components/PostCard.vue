@@ -1,6 +1,6 @@
 <template>
   <div
-    class="bg-white rounded-lg overflow-hidden shadow-md mb-6 transition-shadow duration-300 hover:shadow-lg"
+    class="bg-white/50 rounded-lg overflow-hidden mb-6 transition-shadow duration-300 hover:shadow-lg"
   >
     <!-- Post image -->
     <div class="w-full h-64 overflow-hidden relative group">
