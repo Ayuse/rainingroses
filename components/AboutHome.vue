@@ -1,5 +1,5 @@
 <template>
-  <div class="about h-screen">
+  <div class="about">
     <div class="about-container max-w-[1282px] w-[95%] mx-auto">
       <div
         class="m-auto px-3 md:px-5 py-5 md:py-40 mt-12 md:mt-24 border-t-[#A09F9B] border-t-[1px] border-b-[1px] border-b-[#A09F9B] flex flex-col md:flex-row gap-4 justify-between items-center"
@@ -63,36 +63,35 @@ onMounted(() => {
   // Responsive scroll settings
   const mediaQuery = window.matchMedia("(max-width: 768px)");
 
-  function createScrollTriggers() {
-    // Clear existing scroll triggers
-    ScrollTrigger.getAll().forEach((st) => st.kill());
+  // function createScrollTriggers() {
+  //   // Clear existing scroll triggers
+  //   ScrollTrigger.getAll().forEach((st) => st.kill());
 
-    // Text animation scroll trigger
-    ScrollTrigger.create({
-      trigger: ".about",
-      start: "top top",
-      // end: mediaQuery.matches ? "+=400" : "+=900",
-      animation: wordScroll,
-      // markers: true,
-      scrub: 1,
-    });
+  // Text animation scroll trigger
+  // ScrollTrigger.create({
+  //   trigger: ".about",
+  //   start: "top top",
+  //   // end: mediaQuery.matches ? "+=400" : "+=900",
+  //   animation: wordScroll,
+  //   // markers: true,
+  //   scrub: 1,
+  // });
 
-    // Pin container scroll trigger
-    ScrollTrigger.create({
-      trigger: ".about",
-      start: "top top",
-      // end: mediaQuery.matches ? "+=800" : "+=1000",
-      pin: ".about",
-      pinSpacing: true,
-      scrub: 1,
-    });
-  }
+  // Pin container scroll trigger
+  //   ScrollTrigger.create({
+  //     trigger: ".about",
+  //     start: "top top",
+  //     // end: mediaQuery.matches ? "+=800" : "+=1000",
+  //     pin: ".about",
+  //     pinSpacing: true,
+  //     scrub: 1,
+  // });
 
   // Initial creation
-  createScrollTriggers();
+  // createScrollTriggers();
 
   // Update on resize
-  mediaQuery.addEventListener("change", createScrollTriggers);
+  // mediaQuery.addEventListener("change", createScrollTriggers);
 });
 </script>
 

@@ -1,6 +1,6 @@
 <template>
   <div
-    class="max-w-[1204px] h-[718px] m-auto px-5 py-5 mt-24 border-t-[#A09F9B] border-t-[1px] border-b-[1px] flex flex-col md:flex-row gap-4 hover:h-[800px] transition-all duration-300 page-view"
+    class="max-w-[1204px] m-auto px-5 py-5 mt-24 border-t-[#A09F9B] border-t-[1px] border-b-[1px] flex flex-col md:flex-row gap-4 hover:h-[800px] transition-all duration-300 page-view"
   >
     <NuxtLink
       v-for="(page, index) in pages"
