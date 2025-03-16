@@ -3,7 +3,7 @@
     <div class="bg-[#E6E3DC] m-auto px-5 md:px-10 h-full py-3 md:py-0">
       <div class="max-w-[1200px] mx-auto">
         <div
-          class="flex flex-col md:flex-row items-center justify-between mt-20"
+          class="flex flex-col md:flex-row items-center justify-between mt-5 md:mt-20"
         >
           <div class="font-dancing text-[#212122] relative">
             <div
@@ -43,7 +43,7 @@
           >
             <NuxtLink to="/musings" class="block w-full">
               <div
-                class="w-[100%] md:w-[385px] h-[463px] overflow-hidden md:mt-0 mt-10 rounded-lg relative page-card-container cursor-pointer"
+                class="w-[100%] md:w-[385px] h-[463px] overflow-hidden md:mt-0 mt-5 rounded-lg relative page-card-container cursor-pointer"
                 @mouseenter="handleMouseEnter"
                 @mouseleave="handleMouseLeave"
               >

@@ -22,7 +22,7 @@
 
       <NuxtImg
         :src="page.image"
-        class="w-full object-cover transition-all duration-300 image-reveal hover:h-[700px] h-[580px]"
+        class="w-full object-cover transition-all duration-300 image-reveal hover:h-[700px] h-[400px] md:h-[580px]"
       />
     </NuxtLink>
   </div>

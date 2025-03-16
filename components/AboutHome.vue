@@ -71,8 +71,9 @@ onMounted(() => {
     ScrollTrigger.create({
       trigger: ".about",
       start: "top top",
-      end: mediaQuery.matches ? "+=400" : "+=900",
+      // end: mediaQuery.matches ? "+=400" : "+=900",
       animation: wordScroll,
+      // markers: true,
       scrub: 1,
     });
 
@@ -80,7 +81,7 @@ onMounted(() => {
     ScrollTrigger.create({
       trigger: ".about",
       start: "top top",
-      end: mediaQuery.matches ? "+=800" : "+=1000",
+      // end: mediaQuery.matches ? "+=800" : "+=1000",
       pin: ".about",
       pinSpacing: true,
       scrub: 1,
