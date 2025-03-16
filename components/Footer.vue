@@ -40,7 +40,7 @@
         <NuxtImg src="/images/rose.svg" class="home-header-img" fit="cover" />
       </div>
       <div class="overflow-hidden text-[clamp(48px,8vw,96px)]">
-        <h1 class="home-header">Raining Roses</h1>
+        <h1>Raining Roses</h1>
       </div>
     </div>
 
