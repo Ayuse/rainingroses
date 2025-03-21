@@ -153,6 +153,15 @@
   </div>
 </template>
 <script setup>
+useHead({
+  title: "Raining Roses",
+  meta: [
+    {
+      name: "description",
+      content: "Raining Roses is a personal blog by Tola.",
+    },
+  ],
+});
 import gsap from "gsap";
 import { onMounted } from "vue";
 import SplitType from "split-type";

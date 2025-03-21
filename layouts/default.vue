@@ -168,6 +168,15 @@ onUnmounted(() => {
 </script>
 
 <style>
+html {
+  overflow: hidden;
+  height: 100%;
+}
+
+body {
+  height: 100%;
+  overflow: auto;
+}
 .nav-link a {
   position: relative;
   text-decoration: none;

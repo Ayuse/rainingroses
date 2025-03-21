@@ -29,32 +29,38 @@
 </template>
 
 <script setup>
-import { onMounted } from "vue";
+import { onMounted, ref } from "vue";
 import { useGSAP } from "~/composables/useGSAP";
 
-const pages = [
-  {
-    title: "Code Red",
-    subtitle: "In Serious Toruble",
-    readTime: "3 min read",
-    image: "/images/code-red.png",
-    slug: "code-red",
-  },
-  {
-    title: "Sister Unity",
-    subtitle: "The weight of a lifetime",
-    readTime: "3 min read",
-    image: "/images/sister.png",
-    slug: "sister-unity",
-  },
-  {
-    title: "Sister Unity",
-    subtitle: "The weight of a lifetime",
-    readTime: "3 min read",
-    image: "/images/sister.png",
-    slug: "sister-unity",
-  },
-];
+const pages = ref([]);
+
+// Define the GROQ query to fetch the last three published posts
+const POSTS_QUERY = groq`*[_type == "blogType"] | order(publishedAt desc)[0...3] {
+  title,
+  shortDescription,
+  "slug": slug.current,
+  "image": image.asset->url,
+}`;
+
+// Fetch posts using top-level await, similar to [slug].vue implementation
+const { data: postsData } = await useSanityQuery(POSTS_QUERY);
+
+console.log(postsData.value);
+// Process the fetched data
+onMounted(() => {
+  try {
+    pages.value = postsData.value.map((post) => ({
+      title: post.title,
+      subtitle: post.shortDescription || "",
+      readTime: post.readTime || "3 min read",
+      image: post.image || "/images/default.png",
+      slug: post.slug,
+    }));
+  } catch (error) {
+    console.error("Error processing posts data:", error);
+    pages.value = [];
+  }
+});
 
 onMounted(async () => {
   const { gsap, ScrollTrigger } = await useGSAP();
@@ -65,11 +71,6 @@ onMounted(async () => {
 
   setTimeout(() => {
     const triggerElement = document.querySelector(".page-view");
-    console.log("Trigger element height:", triggerElement?.offsetHeight);
-    console.log(
-      "Trigger element position:",
-      triggerElement?.getBoundingClientRect()
-    );
 
     const tl = gsap.timeline({
       scrollTrigger: {

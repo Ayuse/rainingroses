@@ -34,6 +34,7 @@ import { gsap } from "gsap";
 import CustomEase from "gsap/CustomEase";
 
 import { ref, onMounted, watch } from "vue";
+import { useRouter } from "nuxt/app";
 
 // Register plugins
 gsap.registerPlugin(CustomEase);
@@ -48,6 +49,7 @@ const images = [
 
 const imagesLoaded = ref(false);
 const loadedImagesCount = ref(0);
+const router = useRouter();
 
 // Custom bezier curve for spring-like animation
 const springBezier = [0.77, 0, 0.18, 1];
@@ -60,12 +62,37 @@ const onImageLoad = () => {
   }
 };
 
+// Reset animation state
+const resetAnimation = () => {
+  console.log("resetting animation");
+
+  console.log("resetting animation 2");
+  // Reset GSAP animations
+  gsap.set(`.image-container`, { clipPath: "inset(100% 0 0 0)" });
+  gsap.set(`.image-wrapper .image`, {
+    clipPath: "inset(100% 0 0 0)",
+    scale: 2,
+  });
+  gsap.set(`.preloader-header`, { y: "100%" });
+  gsap.set(`.preloader_container`, { y: "0%" });
+  // Reset loaded state to trigger animation again
+  imagesLoaded.value = false;
+  loadedImagesCount.value = 0;
+
+  // Since images might be cached now, manually trigger the loaded state
+  setTimeout(() => {
+    loadedImagesCount.value = images.length;
+    imagesLoaded.value = true;
+  }, 100);
+};
+
 // Watch for when all images are loaded
 watch(imagesLoaded, (newValue) => {
   if (newValue) {
     startAnimation();
   }
 });
+
 // Function to start the animation
 const startAnimation = () => {
   const pl = gsap.timeline();
@@ -107,6 +134,28 @@ const startAnimation = () => {
     ease: "customEase",
   });
 };
+
+// Watch for route changes
+onMounted(() => {
+  // Start animation when component is first mounted
+  if (loadedImagesCount.value === images.length) {
+    imagesLoaded.value = true;
+  }
+
+  // Listen for route changes
+  router.afterEach((to, from) => {
+    // Check if we're navigating to the home page
+    if (to.path === "/" && from.path !== "/") {
+      // Reset and replay animation when returning to home
+      nextTick(() => {
+        setTimeout(() => {
+          resetAnimation();
+          console.log("resetting animation 3");
+        }, 1000); // Small delay to ensure DOM is ready
+      });
+    }
+  });
+});
 </script>
 
 <style scoped>
