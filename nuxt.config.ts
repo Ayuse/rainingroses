@@ -24,10 +24,10 @@ export default defineNuxtConfig({
     },
   },
   router: {
-    middleware: ["pageTransition"],
+    // middleware: ["pageTransition"],
   },
   app: {
-    pageTransition: { name: "page", mode: "out-in" },
+    pageTransition: { name: "page" },
   },
   build: {
     transpile: ["gsap"],
