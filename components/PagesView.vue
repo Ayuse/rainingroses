@@ -1,6 +1,6 @@
 <template>
   <div
-    class="max-w-[1204px] m-auto px-5 py-5 mt-24 border-t-[#A09F9B] border-t-[1px] border-b-[1px] flex flex-col md:flex-row gap-4 hover:h-[800px] transition-all duration-300 page-view"
+    class="max-w-[1204px] m-auto px-5 py-5 mt-24 border-t-[#A09F9B] border-t-[1px] border-b-[1px] flex flex-col md:flex-row gap-4 transition-all duration-300 page-view"
   >
     <NuxtLink
       v-for="(page, index) in pages"
@@ -10,27 +10,28 @@
     >
       <div class="flex justify-between py-5">
         <div class="flex flex-col">
-          <h2 class="font-italiana font-light text-[48px]">{{ page.title }}</h2>
-          <p class="font-inter text-[16px] font-light italic">
+          <h2 class="font-italiana font-light text-2xl sm:text-3xl md:text-4xl lg:text-5xl">{{ page.title }}</h2>
+          <p class="font-inter text-sm sm:text-base font-light italic">
             {{ page.subtitle }}
           </p>
         </div>
-        <h3 class="font-inter text-[16px] font-light italic place-self-end">
+        <h3 class="font-inter text-sm sm:text-base font-light italic place-self-end">
           {{ page.readTime }}
         </h3>
       </div>
-
-      <NuxtImg
-        :src="page.image"
-        class="w-full object-cover transition-all duration-300 image-reveal hover:h-[700px] h-[400px] md:h-[580px]"
-      />
+      <div class="overflow-hidden h-[400px] md:h-[580px] hover:rounded-[16px]">
+        <NuxtImg
+          :src="page.image"
+          class="w-full object-cover h-full transition-all duration-300 image-reveal hover:scale-[1.2]"
+        />
+      </div>
     </NuxtLink>
   </div>
 </template>
 
 <script setup>
-import { onMounted, ref } from "vue";
-import { useGSAP } from "~/composables/useGSAP";
+import { onMounted, ref } from 'vue';
+import { useGSAP } from '~/composables/useGSAP';
 
 const pages = ref([]);
 
@@ -51,13 +52,13 @@ onMounted(() => {
   try {
     pages.value = postsData.value.map((post) => ({
       title: post.title,
-      subtitle: post.shortDescription || "",
-      readTime: post.readTime || "3 min read",
-      image: post.image || "/images/default.png",
+      subtitle: post.shortDescription || '',
+      readTime: post.readTime || '3 min read',
+      image: post.image || '/images/default.png',
       slug: post.slug,
     }));
   } catch (error) {
-    console.error("Error processing posts data:", error);
+    console.error('Error processing posts data:', error);
     pages.value = [];
   }
 });
@@ -67,34 +68,34 @@ onMounted(async () => {
 
   if (!ScrollTrigger) return; // Guard clause for SSR
 
-  console.log("Component mounted, setting up ScrollTrigger");
+  console.log('Component mounted, setting up ScrollTrigger');
 
   setTimeout(() => {
-    const triggerElement = document.querySelector(".page-view");
+    const triggerElement = document.querySelector('.page-view');
 
     const tl = gsap.timeline({
       scrollTrigger: {
-        trigger: ".page-view",
-        start: "top +900",
-        toggleActions: "play none none none",
+        trigger: '.page-view',
+        start: 'top +900',
+        toggleActions: 'play none none none',
       },
     });
 
     tl.fromTo(
-      ".image-reveal",
+      '.image-reveal',
       {
-        clipPath: "inset(100% 0 0 0)",
+        clipPath: 'inset(100% 0 0 0)',
         opacity: 0,
       },
       {
-        clipPath: "inset(0)",
+        clipPath: 'inset(0)',
         opacity: 1,
         duration: 0.3,
-        stagger: 0.1,
-        ease: "power2.inOut",
+        stagger: 0.3,
+        ease: 'power2.inOut',
       }
     ).fromTo(
-      [".page-view h2", ".page-view h3", ".page-view p"],
+      ['.page-view h2', '.page-view h3', '.page-view p'],
       {
         opacity: 0,
         y: 50,
@@ -103,8 +104,8 @@ onMounted(async () => {
         opacity: 1,
         y: 0,
         duration: 0.3,
-        stagger: 0.1,
-        ease: "power2.inOut",
+        // stagger: 0.1,
+        ease: 'power2.inOut',
       }
     );
 

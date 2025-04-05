@@ -1,6 +1,6 @@
 <template>
   <footer
-    class="bg-[#212122] text-[#E6E3DC] px-6 md:px-10 py-20 flex flex-col gap-10 h-[50vh] sticky bottom-0 -z-10"
+    class="bg-[#212122] text-[#E6E3DC] px-6 md:px-10 py-20 flex flex-col gap-10 sticky bottom-0 -z-10"
     data-scroll
     data-scroll-speed="-0.2"
   >

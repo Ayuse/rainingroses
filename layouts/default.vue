@@ -96,10 +96,11 @@
       <nuxt-link to="/musings">Musings</nuxt-link>
       <nuxt-link to="/vault">Book Vault</nuxt-link>
       <nuxt-link to="/about">About</nuxt-link>
+      <div class="w-full h-full absolute top-0 left-0 blur-sm z-[-1]"></div>
     </nav>
 
     <!-- Page Content -->
-    <div class="pt-20 md:pt-24">
+    <div class="bg-[#212122]">
       <slot />
     </div>
 

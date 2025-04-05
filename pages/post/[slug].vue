@@ -66,11 +66,11 @@ onMounted(() => {
 </script>
 
 <template>
-  <div class="bg-gray-50 min-h-screen">
+  <div class="bg-post min-h-screen pt-20"> 
     <main
       v-if="post"
       ref="mainContent"
-      class="container mx-auto min-h-screen max-w-3xl p-8 flex flex-col gap-6"
+      class="container mx-auto min-h-screen max-w-5xl p-8 flex flex-col gap-6"
       :class="{ 'force-visible': contentVisible }"
     >
       <!-- <a
@@ -108,17 +108,17 @@ onMounted(() => {
       <div class="flex flex-col gap-2">
         <h1
           v-if="post.title"
-          class="text-4xl font-bold text-gray-800 font-italiana"
+          class="text-3xl md:text-4xl lg:text-5xl xl:text-6xl font-bold text-gray-800 font-italiana pt-6 md:pt-10"
         >
           {{ post.title }}
         </h1>
-        <p v-if="post.publishedAt" class="text-gray-500">
+        <p v-if="post.publishedAt" class="text-sm md:text-base text-gray-500">
           {{ getRelativeTime(post.publishedAt) }}
         </p>
       </div>
 
       <div
-        class="prose prose-lg max-w-none bg-white p-8 rounded-xl shadow-sm flex flex-col gap-4"
+        class="prose prose-sm md:prose-base lg:prose-lg max-w-none bg-white p-4 md:p-8 rounded-xl shadow-sm flex flex-col gap-4"
       >
         <SanityContent v-if="post.content" :blocks="post.content" />
       </div>
@@ -132,11 +132,11 @@ onMounted(() => {
 }
 
 .prose h2 {
-  @apply text-2xl font-semibold text-gray-800 mt-8 mb-4;
+  @apply text-xl md:text-2xl font-semibold text-gray-800 mt-6 md:mt-8 mb-3 md:mb-4;
 }
 
 .prose p {
-  @apply my-4 leading-relaxed;
+  @apply my-3 md:my-4 leading-relaxed;
 }
 
 .prose a {
@@ -164,5 +164,21 @@ onMounted(() => {
 .force-visible * {
   opacity: 1 !important;
   transform: none !important;
+}
+
+.bg-post {
+  background-image: url('/images/blog-bg3.png');
+  background-size: cover;
+  background-position: center;
+  background-attachment: fixed;
+  border-bottom-left-radius: 60px;
+  border-bottom-right-radius: 60px;
+}
+
+@media (max-width: 768px) {
+  .bg-post {
+    border-bottom-left-radius: 30px;
+    border-bottom-right-radius: 30px;
+  }
 }
 </style>

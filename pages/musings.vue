@@ -54,7 +54,7 @@
       </div>
 
       <div class="grid gap-6">
-        <PostCard v-for="post in displayedPosts" :key="post.id" :post="post" />
+        <PostCard v-for="post in displayedPosts" :key="post.slug" :post="post" />
 
         <!-- Loading indicator -->
         <div v-if="isLoading" class="flex justify-center items-center py-4">
@@ -86,88 +86,109 @@
   </div>
 </template>
 
-<script>
-import postsData from "@/data/posts.json";
+<script setup>
+import { ref, onMounted, onBeforeUnmount } from 'vue';
 import PostCard from "@/components/PostCard.vue";
 
-export default {
-  name: "MusingsPage",
-  components: {
-    PostCard,
-  },
-  data() {
-    return {
-      allPosts: [],
-      displayedPosts: [],
-      currentPage: 1,
-      postsPerPage: 4,
-      isLoading: false,
-      noMorePosts: false,
-      observer: null,
-    };
-  },
-  mounted() {
-    // Initialize posts data
-    this.allPosts = postsData;
+// Define the GROQ query to fetch posts with musings tag
+const MUSINGS_QUERY = groq`*[_type == "blogType"] | order(publishedAt desc) {
+  title,
+  shortDescription,
+  "slug": slug.current,
+  "image": image.asset->url,
+  publishedAt,
+  readTime
+}`;
 
+// Data reactive properties
+const allPosts = ref([]);
+const displayedPosts = ref([]);
+const currentPage = ref(1);
+const postsPerPage = ref(4);
+const isLoading = ref(false);
+const noMorePosts = ref(false);
+const observer = ref(null);
+const observerTarget = ref(null);
+
+// Fetch posts from Sanity
+const { data: postsData } = await useSanityQuery(MUSINGS_QUERY);
+
+// Process the fetched data
+onMounted(() => {
+  try {
+    allPosts.value = postsData.value.map((post) => ({
+      title: post.title,
+      subtitle: post.shortDescription || '',
+      readTime: post.readTime || '3 min read',
+      image: post.image || '/images/default.png',
+      slug: post.slug,
+      publishedAt: post.publishedAt,
+    }));
+    
     // Load initial posts
-    this.loadMorePosts();
-
+    loadMorePosts();
+    
     // Set up intersection observer for infinite scroll
-    this.setupIntersectionObserver();
-  },
-  beforeUnmount() {
-    // Clean up the observer when component is destroyed
-    if (this.observer) {
-      this.observer.disconnect();
+    setupIntersectionObserver();
+  } catch (error) {
+    console.error('Error processing posts data:', error);
+    allPosts.value = [];
+  }
+});
+
+onBeforeUnmount(() => {
+  // Clean up the observer when component is destroyed
+  if (observer.value) {
+    observer.value.disconnect();
+  }
+});
+
+function setupIntersectionObserver() {
+  // Create a new IntersectionObserver
+  observer.value = new IntersectionObserver(handleIntersection, {
+    root: null, // Use viewport as root
+    rootMargin: "0px",
+    threshold: 0.1, // Trigger when 10% of target is visible
+  });
+
+  // Start observing the target element
+  if (observerTarget.value) {
+    observer.value.observe(observerTarget.value);
+  }
+}
+
+function handleIntersection(entries) {
+  // Check if target element is intersecting viewport
+  if (entries[0].isIntersecting && !isLoading.value && !noMorePosts.value) {
+    loadMorePosts();
+  }
+}
+
+function loadMorePosts() {
+  // Set loading state
+  isLoading.value = true;
+
+  setTimeout(() => {
+    const startIndex = (currentPage.value - 1) * postsPerPage.value;
+    const endIndex = startIndex + postsPerPage.value;
+    const newPosts = allPosts.value.slice(startIndex, endIndex);
+
+    // Add new posts to displayed posts
+    if (newPosts.length > 0) {
+      displayedPosts.value = [...displayedPosts.value, ...newPosts];
+      currentPage.value += 1;
+    } else {
+      noMorePosts.value = true;
     }
-  },
-  methods: {
-    setupIntersectionObserver() {
-      // Create a new IntersectionObserver
-      this.observer = new IntersectionObserver(this.handleIntersection, {
-        root: null, // Use viewport as root
-        rootMargin: "0px",
-        threshold: 0.1, // Trigger when 10% of target is visible
-      });
 
-      // Start observing the target element
-      if (this.$refs.observerTarget) {
-        this.observer.observe(this.$refs.observerTarget);
-      }
-    },
-    handleIntersection(entries) {
-      // Check if target element is intersecting viewport
-      if (entries[0].isIntersecting && !this.isLoading && !this.noMorePosts) {
-        this.loadMorePosts();
-      }
-    },
-    loadMorePosts() {
-      // Simulate loading delay
-      this.isLoading = true;
+    isLoading.value = false;
+  }, 300); // Reduced simulation delay
+}
 
-      setTimeout(() => {
-        const startIndex = (this.currentPage - 1) * this.postsPerPage;
-        const endIndex = startIndex + this.postsPerPage;
-        const newPosts = this.allPosts.slice(startIndex, endIndex);
-
-        // Add new posts to displayed posts
-        if (newPosts.length > 0) {
-          this.displayedPosts = [...this.displayedPosts, ...newPosts];
-          this.currentPage += 1;
-        } else {
-          this.noMorePosts = true;
-        }
-
-        this.isLoading = false;
-      }, 1000); // Simulate network delay
-    },
-    scrollToTop() {
-      window.scrollTo({
-        top: 0,
-        behavior: "smooth",
-      });
-    },
-  },
-};
+function scrollToTop() {
+  window.scrollTo({
+    top: 0,
+    behavior: "smooth",
+  });
+}
 </script>
