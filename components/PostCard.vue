@@ -1,5 +1,6 @@
 <template>
-  <div
+  <NuxtLink
+    :to="`/post/${post.slug}`"
     class="bg-white/50 rounded-lg overflow-hidden mb-6 transition-shadow duration-300 hover:shadow-lg"
   >
     <!-- Post image -->
@@ -25,16 +26,16 @@
           <div
             class="w-full h-full flex items-center justify-center text-white bg-indigo-500"
           >
-            {{ post.author.charAt(0) }}
+            {{ post.author ? post.author.charAt(0) : 'A' }}
           </div>
         </div>
         <div>
           <div
             class="text-sm font-medium text-gray-900 hover:text-indigo-500 transition-colors duration-300 cursor-pointer"
           >
-            {{ post.author }}
+            {{ post.author || 'Anonymous' }}
           </div>
-          <div class="text-xs text-gray-500">{{ post.date }}</div>
+          <div class="text-xs text-gray-500">{{ post.date || 'No date' }}</div>
         </div>
         <!-- Three dots menu -->
         <div class="ml-auto">
@@ -61,7 +62,7 @@
       >
         {{ post.title }}
       </h2>
-      <p class="text-gray-700 mb-4">{{ post.description }}</p>
+      <p class="text-gray-700 mb-4">{{ post.description || post.subtitle || '' }}</p>
 
       <!-- Post stats -->
       <div class="flex items-center text-sm text-gray-500 border-t pt-3">
@@ -86,7 +87,7 @@
               d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"
             />
           </svg>
-          <span>{{ post.views }} views</span>
+          <span>{{ post.views || 0 }} views</span>
         </div>
         <div class="ml-auto flex items-center">
           <button
@@ -104,12 +105,12 @@
                 clip-rule="evenodd"
               />
             </svg>
-            <span class="ml-1">{{ post.likes }}</span>
+            <span class="ml-1">{{ post.likes || 0 }}</span>
           </button>
         </div>
       </div>
     </div>
-  </div>
+  </NuxtLink>
 </template>
 
 <script>
