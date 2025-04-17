@@ -91,7 +91,7 @@ import { ref, onMounted, onBeforeUnmount } from 'vue';
 import PostCard from "@/components/PostCard.vue";
 
 // Define the GROQ query to fetch posts with musings tag
-const MUSINGS_QUERY = groq`*[_type == "blogType"] | order(publishedAt desc) {
+const MUSINGS_QUERY = groq`*[_type == "blogType" && "musings" in tags] | order(publishedAt desc) {
   title,
   shortDescription,
   "slug": slug.current,

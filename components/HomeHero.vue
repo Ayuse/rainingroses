@@ -3,7 +3,7 @@
     <div class="bg-[#E6E3DC] m-auto px-5 md:px-10 h-full py-3 md:py-0 rounded-b-[30px] md:rounded-b-[60px]">
       <div class="max-w-[1200px] mx-auto">
         <div
-          class="flex flex-col md:flex-row items-center justify-between mt-5 md:mt-20"
+          class="flex flex-col md:flex-row items-center justify-between mt-5 md:mt-[7rem]"
         >
           <div class="font-dancing text-[#212122] relative">
             <div
@@ -163,11 +163,26 @@ useHead({
   ],
 });
 import gsap from "gsap";
-import { onMounted } from "vue";
+import { onMounted, ref } from "vue";
 import SplitType from "split-type";
+import { useNuxtApp } from "#app";
 
-onMounted(() => {
-  const homeTl = gsap.timeline();
+// Get the animation bus
+const { $animBus } = useNuxtApp();
+
+// Reference to control animation start
+const canStartAnimation = ref(false);
+
+// Animation setup function
+const setupAnimation = () => {
+  const homeTl = gsap.timeline({
+    paused: true, // Start paused until we're ready to play
+    onComplete: () => {
+      // Emit event when home animation finishes
+      $animBus.emit('homehero:complete');
+    }
+  });
+  
   // Get current screen width
   const isMobile = window.innerWidth < 768; // Mobile breakpoint is typically 768px
 
@@ -184,7 +199,7 @@ onMounted(() => {
       stagger: 0.1,
       ease: "power2.out",
     },
-    "4.2"
+    "0"
   );
   homeTl.fromTo(
     ".rose-container",
@@ -198,7 +213,7 @@ onMounted(() => {
       duration: 0.5,
       ease: "power2.out",
     },
-    "5"
+    "0.8"
   );
   homeTl.fromTo(
     ".rose-bg",
@@ -212,7 +227,7 @@ onMounted(() => {
       duration: 1,
       ease: "power2.out",
     },
-    "5"
+    "0.8"
   );
 
   // Split text using SplitType instead of SplitText
@@ -234,7 +249,7 @@ onMounted(() => {
       stagger: 0.05,
       ease: "power2.inOut",
     },
-    "4.3"
+    "0.1"
   );
 
   homeTl.fromTo(
@@ -250,7 +265,7 @@ onMounted(() => {
       stagger: 0.03,
       ease: "power2.inOut",
     },
-    "4.5"
+    "0.3"
   );
 
   homeTl.fromTo(
@@ -266,7 +281,7 @@ onMounted(() => {
       duration: 1,
       ease: "power2.out",
     },
-    "5"
+    "0.8"
   );
 
   homeTl.fromTo(
@@ -282,7 +297,7 @@ onMounted(() => {
       duration: 0.7,
       ease: "power4.out",
     },
-    "5.2"
+    "1"
   );
 
   // Only run this animation on mobile screens
@@ -302,8 +317,30 @@ onMounted(() => {
         duration: 0.7,
         ease: "power4.out",
       },
-      "5.2"
+      "1"
     );
+  }
+
+  // Return the timeline for later use
+  return homeTl;
+};
+
+// Method to start animation
+const startHomeAnimation = () => {
+  canStartAnimation.value = true;
+  const homeTl = setupAnimation();
+  homeTl.play();
+};
+
+// Make the function available to parent components
+defineExpose({
+  startHomeAnimation
+});
+
+onMounted(() => {
+  // Preload animation setup - actual playback will be triggered by the parent
+  if (canStartAnimation.value) {
+    setupAnimation().play();
   }
 
   // Add resize listener to handle orientation changes
@@ -311,23 +348,26 @@ onMounted(() => {
     const currentIsMobile = window.innerWidth < 768;
 
     // If device switched to mobile and animation hasn't run
-    if (currentIsMobile && !isMobile) {
-      gsap.fromTo(
-        pageSubheaders.words,
-        {
-          y: "100%",
-          opacity: 0,
-          filter: "blur(4px)",
-        },
-        {
-          y: "0%",
-          opacity: 1,
-          filter: "blur(0px)",
-          stagger: 0.05,
-          duration: 0.7,
-          ease: "power4.out",
-        }
-      );
+    if (currentIsMobile) {
+      const pageSubheaders = document.querySelectorAll(".page-subheader .word");
+      if (pageSubheaders.length > 0) {
+        gsap.fromTo(
+          pageSubheaders,
+          {
+            y: "100%",
+            opacity: 0,
+            filter: "blur(4px)",
+          },
+          {
+            y: "0%",
+            opacity: 1,
+            filter: "blur(0px)",
+            stagger: 0.05,
+            duration: 0.7,
+            ease: "power4.out",
+          }
+        );
+      }
     }
   };
 

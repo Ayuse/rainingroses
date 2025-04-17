@@ -35,10 +35,14 @@ import CustomEase from "gsap/CustomEase";
 
 import { ref, onMounted, watch } from "vue";
 import { useRouter } from "nuxt/app";
+import { useNuxtApp } from "#app";
 
 // Register plugins
 gsap.registerPlugin(CustomEase);
 CustomEase.create("customEase", "0.86,0,0.07,1");
+
+// Get the animation bus from the plugin
+const { $animBus } = useNuxtApp();
 
 const images = [
   "/images/preload-img/img-1.png",
@@ -50,6 +54,16 @@ const images = [
 const imagesLoaded = ref(false);
 const loadedImagesCount = ref(0);
 const router = useRouter();
+
+// Track if animation has played this session
+const animationHasPlayed = ref(false);
+
+// Check sessionStorage on component creation
+onMounted(() => {
+  if (sessionStorage.getItem('animationPlayed') === 'true') {
+    animationHasPlayed.value = true;
+  }
+});
 
 // Custom bezier curve for spring-like animation
 const springBezier = [0.77, 0, 0.18, 1];
@@ -66,6 +80,11 @@ const onImageLoad = () => {
 const resetAnimation = () => {
   console.log("resetting animation");
 
+  // If animation has already played this session, don't reset
+  if (animationHasPlayed.value) {
+    return;
+  }
+  
   console.log("resetting animation 2");
   // Reset GSAP animations
   gsap.set(`.image-container`, { clipPath: "inset(100% 0 0 0)" });
@@ -95,7 +114,27 @@ watch(imagesLoaded, (newValue) => {
 
 // Function to start the animation
 const startAnimation = () => {
-  const pl = gsap.timeline();
+  // Skip animation if it has already played this session
+  if (animationHasPlayed.value) {
+    // Immediately set elements to their final state
+    gsap.set(`.image-container`, { clipPath: "inset(0 0 100% 0)" });
+    gsap.set(`.preloader-header`, { y: 0 });
+    gsap.set(`.preloader_container`, { y: "-100%" });
+    // Emit event through the bus if we're skipping the animation
+    $animBus.emit('preloader:complete');
+    return;
+  }
+
+  // Mark animation as played for this session
+  animationHasPlayed.value = true;
+  sessionStorage.setItem('animationPlayed', 'true');
+
+  const pl = gsap.timeline({
+    onComplete: () => {
+      // Emit the event through the animation bus
+      $animBus.emit('preloader:complete');
+    }
+  });
   const overlap = 0.5; // Seconds between animation starts
   pl.to(`.image-container `, {
     clipPath: "inset(0% 0 0 0)",
@@ -146,6 +185,11 @@ onMounted(() => {
   router.afterEach((to, from) => {
     // Check if we're navigating to the home page
     if (to.path === "/" && from.path !== "/") {
+      // Skip replaying animation if it has already played this session
+      if (animationHasPlayed.value) {
+        return;
+      }
+      
       // Reset and replay animation when returning to home
       nextTick(() => {
         setTimeout(() => {

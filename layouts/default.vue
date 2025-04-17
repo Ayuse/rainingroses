@@ -87,8 +87,9 @@
     </button>
 
     <!-- Desktop Navigation -->
+    <div class="bg-[#E6E3DC] h-[30px]">
     <nav
-      class="bottom-radius hidden md:flex justify-around text-[#000000] text-[20px] font-italiana max-w-[800px] m-auto nav-link fixed top-0 left-0 right-0 z-30 transition-transform duration-300 bg-[#E6E3DC] py-8"
+      class="rounded-[30px] md:rounded-[60px] hidden md:flex justify-around text-[#000000] text-[20px] font-italiana max-w-[800px] m-auto nav-link fixed top-5 left-0 right-0 z-30 transition-transform duration-300 py-8"
       :class="{ 'translate-y-0': showNav, '-translate-y-full': !showNav }"
     >
       <nuxt-link to="/">Home</nuxt-link>
@@ -98,7 +99,7 @@
       <nuxt-link to="/about">About</nuxt-link>
       <div class="w-full h-full absolute top-0 left-0 blur-sm z-[-1]"></div>
     </nav>
-
+    </div>
     <!-- Page Content -->
     <div class="bg-[#212122]">
       <slot />
@@ -111,14 +112,46 @@
 <script setup>
 import gsap from "gsap";
 import { ref, onMounted, onUnmounted } from "vue";
+import { useNuxtApp } from "#app";
 
 const isMenuOpen = ref(false);
 const showNav = ref(true);
 const lastScrollTop = ref(0);
 const scrollThreshold = 50; // Minimum scroll amount before showing/hiding
 
+// Reference to control whether navigation animation should be played
+const navAnimationPlayed = ref(false);
+
+// Get the animation bus
+const { $animBus, $lenis } = useNuxtApp();
+
+// Function to start nav animation
+const startNavAnimation = () => {
+  if (navAnimationPlayed.value) return;
+  
+  const navTl = gsap.timeline();
+  navTl.fromTo(
+    ".nav-link a",
+    {
+      y: -20,
+      opacity: 0,
+    },
+    {
+      y: 0,
+      opacity: 3,
+      duration: 0.5,
+      stagger: 0.1,
+      ease: "power2.out",
+    }
+  );
+  
+  navAnimationPlayed.value = true;
+};
+
 const handleScroll = () => {
-  const currentScrollTop = window.scrollY || document.documentElement.scrollTop;
+  // Get scroll position from Lenis if available, otherwise use window
+  const lenis = $lenis();
+  const currentScrollTop = lenis ? lenis.scroll : (window.scrollY || document.documentElement.scrollTop);
 
   // Check if we've scrolled past threshold
   if (Math.abs(currentScrollTop - lastScrollTop.value) > scrollThreshold) {
@@ -140,43 +173,48 @@ const handleScroll = () => {
 };
 
 onMounted(() => {
-  const homeTl = gsap.timeline();
-
-  homeTl.fromTo(
-    ".nav-link a",
-    {
-      y: -20,
-      opacity: 0,
-    },
-    {
-      y: 0,
-      opacity: 3,
-      duration: 0.5,
-      stagger: 0.1,
-      ease: "power2.out",
-    },
-    "4.2"
-  );
-
-  // Add scroll event listener
-  window.addEventListener("scroll", handleScroll, { passive: true });
+  // Listen for the completion of HomeHero animation to start nav animation
+  $animBus.on('homehero:complete', startNavAnimation);
+  
+  // If using Lenis, subscribe to its scroll event
+  const lenis = $lenis();
+  if (lenis) {
+    lenis.on('scroll', handleScroll);
+  } else {
+    // Fallback to window scroll events if Lenis is not available
+    window.addEventListener("scroll", handleScroll, { passive: true });
+  }
 });
 
 onUnmounted(() => {
-  // Clean up scroll event listener
-  window.removeEventListener("scroll", handleScroll);
+  // Clean up event listeners
+  $animBus.off('homehero:complete', startNavAnimation);
+  
+  const lenis = $lenis();
+  if (lenis) {
+    lenis.off('scroll', handleScroll);
+  } else {
+    window.removeEventListener("scroll", handleScroll);
+  }
 });
 </script>
 
 <style>
-html {
-  overflow: hidden;
-  height: 100%;
+.nav-link::after{
+  content: '';
+    display: inline-block;
+    position: absolute;
+    inset: 0%;
+    z-index: -1;
+    backdrop-filter: blur(40px);
+    border-radius: inherit;
+}
+html, body {
+  min-height: 100%;
 }
 
 body {
-  height: 100%;
-  overflow: auto;
+  overflow: hidden;
 }
 .nav-link a {
   position: relative;

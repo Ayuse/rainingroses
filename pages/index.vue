@@ -7,6 +7,34 @@
     >
       <StackedImages />
     </div>
-    <HomeHero />
+    <HomeHero ref="homeHeroRef" />
   </div>
 </template>
+
+<script setup>
+import { ref, onMounted, onUnmounted } from 'vue';
+import { useNuxtApp } from '#app';
+
+// Create a reference to the HomeHero component
+const homeHeroRef = ref(null);
+
+// Get the animation bus
+const { $animBus } = useNuxtApp();
+
+// Function to start the HomeHero animation
+const startHomeAnimation = () => {
+  if (homeHeroRef.value) {
+    homeHeroRef.value.startHomeAnimation();
+  }
+};
+
+onMounted(() => {
+  // Listen for the preloader animation completion event
+  $animBus.on('preloader:complete', startHomeAnimation);
+});
+
+onUnmounted(() => {
+  // Clean up event listeners
+  $animBus.off('preloader:complete', startHomeAnimation);
+});
+</script>

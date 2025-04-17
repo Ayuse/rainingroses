@@ -10,7 +10,7 @@
     >
       <div class="flex justify-between py-5">
         <div class="flex flex-col">
-          <h2 class="font-italiana font-light text-2xl sm:text-3xl md:text-4xl lg:text-5xl">{{ page.title }}</h2>
+          <h2 class="font-italiana font-light text-2xl sm:text-3xl md:text-[2rem] lg:text-[2rem]">{{ page.title }}</h2>
           <p class="font-inter text-sm sm:text-base font-light italic">
             {{ page.subtitle }}
           </p>

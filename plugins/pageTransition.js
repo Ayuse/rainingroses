@@ -1,8 +1,19 @@
 export default defineNuxtPlugin((nuxtApp) => {
+  // Get the lenis instance
+  const getLenis = () => {
+    return nuxtApp.$lenis ? nuxtApp.$lenis() : null;
+  };
+
+  // Before page transition starts
   nuxtApp.hook("page:start", async () => {
     if (process.client) {
+      // Stop lenis scrolling during page transitions to prevent conflicts
+      const lenis = getLenis();
+      if (lenis) {
+        lenis.stop();
+      }
+      
       const gsap = (await import("gsap")).default;
-
       const exitTl = gsap.timeline();
 
       exitTl
@@ -35,6 +46,20 @@ export default defineNuxtPlugin((nuxtApp) => {
           },
           "-=0.3"
         );
+    }
+  });
+
+  // After page transition finishes
+  nuxtApp.hook("page:finish", () => {
+    if (process.client) {
+      // Restart lenis scrolling after the page transition is complete
+      const lenis = getLenis();
+      if (lenis) {
+        // Ensure we're at the top of the page
+        lenis.scrollTo(0, { immediate: true });
+        // Resume scrolling
+        lenis.start();
+      }
     }
   });
 });

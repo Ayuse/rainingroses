@@ -1,5 +1,5 @@
 <template>
-  <div class="min-h-screen bg-[#E6E3DC] pt-16 sm:pt-20 md:pt-32 pb-16 sm:pb-20">
+  <div class="min-h-screen bg-[#E6E3DC] pt-16 sm:pt-20 md:pt-32 pb-16 sm:pb-20 rounded-b-[30px] md:rounded-b-[60px]">
     <div class="max-w-[1282px] w-[92%] sm:w-[95%] mx-auto">
       <div class="grid grid-cols-1 md:grid-cols-3 gap-6 sm:gap-8 md:gap-12">
         <!-- Image Section -->
