@@ -87,9 +87,9 @@
     </button>
 
     <!-- Desktop Navigation -->
-    <div class="bg-[#E6E3DC] h-[30px]">
+    <div class="bg-[#E6E3DC]">
     <nav
-      class="rounded-[30px] md:rounded-[60px] hidden md:flex justify-around text-[#000000] text-[20px] font-italiana max-w-[800px] m-auto nav-link fixed top-5 left-0 right-0 z-30 transition-transform duration-300 py-8"
+      class="rounded-[30px] md:rounded-[60px] hidden md:flex justify-around text-[#000000] text-[20px] font-italiana max-w-[800px] m-auto nav-link fixed top-5 left-0 right-0 z-30 transition-transform duration-300 py-4 border border-[#f3f3f3]"
       :class="{ 'translate-y-0': showNav, '-translate-y-full': !showNav }"
     >
       <nuxt-link to="/">Home</nuxt-link>
@@ -200,21 +200,31 @@ onUnmounted(() => {
 </script>
 
 <style>
-.nav-link::after{
+.nav-link::before{
   content: '';
     display: inline-block;
     position: absolute;
     inset: 0%;
-    z-index: -1;
-    backdrop-filter: blur(40px);
+    z-index: -2;
+    backdrop-filter: blur(10px);
     border-radius: inherit;
+}
+.nav-link::after{
+  content: '';
+  position: absolute;
+  inset: 0%;
+  background-color:#e6e3dc;
+  opacity: 0.35;
+  border-radius: inherit;
+
+  z-index: -1;
 }
 html, body {
   min-height: 100%;
 }
 
 body {
-  overflow: hidden;
+  overflow: auto;
 }
 .nav-link a {
   position: relative;
@@ -257,6 +267,8 @@ body {
   background-color: #dbc9bd;
   transition: width 0.3s ease;
 }
+
+
 
 .nav-link a:hover::after {
   width: 100%;

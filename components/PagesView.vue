@@ -1,38 +1,70 @@
 <template>
   <div
-    class="max-w-[1204px] m-auto px-5 py-5 mt-24 border-t-[#A09F9B] border-t-[1px] border-b-[1px] flex flex-col md:flex-row gap-4 transition-all duration-300 page-view"
+    class="max-w-[1204px] m-auto px-5 py-8 mt-14 md:mt-24 border-t-[#A09F9B] border-t-[1px] border-b-[1px] transition-all duration-300 page-view"
   >
-    <NuxtLink
-      v-for="(page, index) in pages"
-      :key="index"
-      :to="`/post/${page.slug}`"
-      class="place-content-start"
+    <swiper
+      :modules="[SwiperAutoplay, SwiperEffectCreative, SwiperPagination]"
+      :slides-per-view="1" 
+      :breakpoints="{
+        640: {
+          slidesPerView: 2,
+          spaceBetween: 20
+        },
+        768: {
+          slidesPerView: 2,
+          spaceBetween: 24
+        },
+        1024: {
+          slidesPerView: 3,
+          spaceBetween: 24
+        }
+      }"
+      :autoplay="{ delay: 4000, disableOnInteraction: false }"
+      :pagination="{ clickable: true }"
+      :loop="true"
+      class="w-full"
     >
-      <div class="flex justify-between py-5">
-        <div class="flex flex-col">
-          <h2 class="font-italiana font-light text-2xl sm:text-3xl md:text-[2rem] lg:text-[2rem]">{{ page.title }}</h2>
-          <p class="font-inter text-sm sm:text-base font-light italic">
-            {{ page.subtitle }}
-          </p>
-        </div>
-        <h3 class="font-inter text-sm sm:text-base font-light italic place-self-end">
-          {{ page.readTime }}
-        </h3>
-      </div>
-      <div class="overflow-hidden h-[400px] md:h-[580px] hover:rounded-[16px]">
-        <NuxtImg
-          :src="page.image"
-          class="w-full object-cover h-full transition-all duration-300 image-reveal hover:scale-[1.2]"
-        />
-      </div>
-    </NuxtLink>
+      <swiper-slide v-for="(page, index) in pages" :key="index" class="flex-1">
+        <NuxtLink
+          :to="`/post/${page.slug}`"
+          class="block"
+        >
+          <div class="flex flex-col mb-2">
+            <h2 class="font-italiana font-light text-2xl sm:text-3xl text-[#3c3c3c]">{{ page.title }}</h2>
+            <p class="font-inter text-xs sm:text-sm font-light italic text-[#767676] mt-1">
+              {{ page.subtitle }}
+            </p>
+          </div>
+          <div class="flex justify-end mb-3">
+            <h3 class="font-inter text-xs sm:text-sm font-light italic text-[#767676]">
+              {{ page.readTime }}
+            </h3>
+          </div>
+          <div class="overflow-hidden h-[250px] sm:h-[300px] hover:rounded-[8px]">
+            <NuxtImg
+              :src="page.image"
+              class="w-full object-cover h-full transition-all duration-300 image-reveal hover:scale-[1.05]"
+              loading="lazy"
+            />
+          </div>
+        </NuxtLink>
+      </swiper-slide>
+    </swiper>
   </div>
 </template>
 
 <script setup>
 import { onMounted, ref } from 'vue';
 import { useGSAP } from '~/composables/useGSAP';
+import { Swiper, SwiperSlide } from 'swiper/vue';
+import { Autoplay, EffectCreative, Pagination } from 'swiper/modules';
+import 'swiper/css';
+import 'swiper/css/pagination';
+import 'swiper/css/effect-creative';
 
+const SwiperAutoplay = Autoplay;
+const SwiperEffectCreative = EffectCreative;
+const SwiperPagination = Pagination;
 const pages = ref([]);
 
 // Define the GROQ query to fetch the last three published posts
@@ -46,13 +78,12 @@ const POSTS_QUERY = groq`*[_type == "blogType"] | order(publishedAt desc)[0...3]
 // Fetch posts using top-level await, similar to [slug].vue implementation
 const { data: postsData } = await useSanityQuery(POSTS_QUERY);
 
-console.log(postsData.value);
 // Process the fetched data
 onMounted(() => {
   try {
     pages.value = postsData.value.map((post) => ({
       title: post.title,
-      subtitle: post.shortDescription || '',
+      subtitle: post.shortDescription || 'The weight of a lifetime',
       readTime: post.readTime || '3 min read',
       image: post.image || '/images/default.png',
       slug: post.slug,
@@ -68,11 +99,7 @@ onMounted(async () => {
 
   if (!ScrollTrigger) return; // Guard clause for SSR
 
-  console.log('Component mounted, setting up ScrollTrigger');
-
   setTimeout(() => {
-    const triggerElement = document.querySelector('.page-view');
-
     const tl = gsap.timeline({
       scrollTrigger: {
         trigger: '.page-view',
@@ -104,7 +131,6 @@ onMounted(async () => {
         opacity: 1,
         y: 0,
         duration: 0.3,
-        // stagger: 0.1,
         ease: 'power2.inOut',
       }
     );
@@ -118,10 +144,24 @@ onMounted(async () => {
 .page-view {
   position: relative;
   width: 100%;
-  /* min-height: 100vh; */
 }
 
-/* .image-reveal {
-  visibility: hidden;
-} */
+:deep(.swiper-pagination-bullet) {
+  background-color: #A09F9B;
+  opacity: 0.7;
+  margin: 0 4px;
+}
+
+:deep(.swiper-pagination-bullet-active) {
+  background-color: #A09F9B;
+  opacity: 1;
+}
+
+:deep(.swiper) {
+  padding-bottom: 40px;
+}
+
+:deep(.swiper-pagination) {
+  bottom: 0;
+}
 </style>

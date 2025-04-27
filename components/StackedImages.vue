@@ -174,6 +174,19 @@ const startAnimation = () => {
   });
 };
 
+// Function to animate preloader when returning to home page
+const animatePreloaderOnReturn = () => {
+  // First set it to 0% (visible)
+  gsap.set(`.preloader_container`, { y: "0%" });
+  
+  // Then animate it to -100% (off-screen)
+  return gsap.to(`.preloader_container`, {
+    y: "-100%",
+    duration: 1,
+    ease: "customEase",
+  });
+};
+
 // Watch for route changes
 onMounted(() => {
   // Start animation when component is first mounted
@@ -185,18 +198,17 @@ onMounted(() => {
   router.afterEach((to, from) => {
     // Check if we're navigating to the home page
     if (to.path === "/" && from.path !== "/") {
-      // Skip replaying animation if it has already played this session
-      if (animationHasPlayed.value) {
-        return;
-      }
+      // Always animate the preloader when returning to home
+      animatePreloaderOnReturn();
       
-      // Reset and replay animation when returning to home
-      nextTick(() => {
-        setTimeout(() => {
-          resetAnimation();
-          console.log("resetting animation 3");
-        }, 1000); // Small delay to ensure DOM is ready
-      });
+      // Only reset and replay full animation if it hasn't played this session
+      if (!animationHasPlayed.value) {
+        nextTick(() => {
+          setTimeout(() => {
+            resetAnimation();
+          }, 1000); // Small delay to ensure DOM is ready
+        });
+      }
     }
   });
 });
