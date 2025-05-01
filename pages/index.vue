@@ -3,9 +3,10 @@
 <template>
   <div class="min-h-screen">
     <div
-      class="h-screen w-screen bg-[#444444] text-white flex items-center justify-center preloader_container fixed top-0 z-40"
+      class="h-screen w-screen text-white flex items-center justify-center preloader_container fixed top-0 z-40"
+      ref="preloaderRef"
     >
-      <StackedImages />
+      <StackedImages ref="stackedImagesRef" />
     </div>
     <HomeHero ref="homeHeroRef" />
   </div>
@@ -14,9 +15,14 @@
 <script setup>
 import { ref, onMounted, onUnmounted } from 'vue';
 import { useNuxtApp } from '#app';
+import { useRoute, useRouter } from 'vue-router';
 
-// Create a reference to the HomeHero component
+// Create a reference to the components
 const homeHeroRef = ref(null);
+const preloaderRef = ref(null);
+const stackedImagesRef = ref(null);
+const route = useRoute();
+const router = useRouter();
 
 // Get the animation bus
 const { $animBus } = useNuxtApp();
@@ -31,6 +37,14 @@ const startHomeAnimation = () => {
 onMounted(() => {
   // Listen for the preloader animation completion event
   $animBus.on('preloader:complete', startHomeAnimation);
+  
+  // Listen for route changes to trigger the animation when returning to home
+  router.beforeEach((to, from) => {
+    if (to.path === '/' && from.path !== '/' && stackedImagesRef.value?.animatePreloaderOnReturn) {
+      // Use the existing animation function in StackedImages component
+      stackedImagesRef.value.animatePreloaderOnReturn();
+    }
+  });
 });
 
 onUnmounted(() => {

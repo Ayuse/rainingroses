@@ -212,6 +212,11 @@ onMounted(() => {
     }
   });
 });
+
+// Expose methods to parent component
+defineExpose({
+  animatePreloaderOnReturn
+});
 </script>
 
 <style scoped>
