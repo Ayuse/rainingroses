@@ -1,5 +1,5 @@
 <template>
-  <div class="min-h-screen bg-[#111111] text-white font-italiana">
+  <div class="min-h-screen bg-[#111111] text-white font-italiana py-[8rem]">
     <!-- Header section with welcome message and image -->
     <div class="container mx-auto px-4 py-8">
       <div

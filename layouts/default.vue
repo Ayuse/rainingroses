@@ -229,7 +229,7 @@ body {
 .nav-link a {
   position: relative;
   text-decoration: none;
-  opacity: 0;
+  /* opacity: 0; */
 }
 
 .mobile-nav-link a {

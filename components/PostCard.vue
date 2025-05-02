@@ -1,10 +1,10 @@
 <template>
   <NuxtLink
     :to="`/post/${post.slug}`"
-    class="bg-white/50 rounded-lg overflow-hidden mb-6 transition-shadow duration-300 hover:shadow-lg"
+    class="bg-white/50 rounded-lg overflow-hidden mb-6 transition-shadow duration-300 hover:shadow-lg flex h-[350px]"
   >
     <!-- Post image -->
-    <div class="w-full h-64 overflow-hidden relative group">
+    <div class="overflow-hidden relative group w-[60%]">
       <img
         :src="post.image"
         :alt="post.title"
@@ -16,53 +16,15 @@
     </div>
 
     <!-- Post content -->
-    <div class="p-4">
-      <!-- Author section -->
-      <div class="flex items-center mb-4">
-        <div
-          class="w-10 h-10 rounded-full bg-gray-300 overflow-hidden mr-3 ring-2 ring-indigo-500 ring-opacity-0 hover:ring-opacity-100 transition-all duration-300"
-        >
-          <!-- Avatar placeholder - could be replaced with actual user image -->
-          <div
-            class="w-full h-full flex items-center justify-center text-white bg-indigo-500"
-          >
-            {{ post.author ? post.author.charAt(0) : 'A' }}
-          </div>
-        </div>
-        <div>
-          <div
-            class="text-sm font-medium text-gray-900 hover:text-indigo-500 transition-colors duration-300 cursor-pointer"
-          >
-            {{ post.author || 'Anonymous' }}
-          </div>
-          <div class="text-xs text-gray-500">{{ post.date || 'No date' }}</div>
-        </div>
-        <!-- Three dots menu -->
-        <div class="ml-auto">
-          <button
-            class="text-gray-500 hover:text-indigo-500 transition-colors duration-300 p-1 rounded-full hover:bg-gray-100"
-          >
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              class="h-5 w-5"
-              viewBox="0 0 20 20"
-              fill="currentColor"
-            >
-              <path
-                d="M10 6a2 2 0 110-4 2 2 0 010 4zM10 12a2 2 0 110-4 2 2 0 010 4zM10 18a2 2 0 110-4 2 2 0 010 4z"
-              />
-            </svg>
-          </button>
-        </div>
-      </div>
+    <div class="p-6 w-[50%] pt-32 md:pl-12 pl-4">
 
       <!-- Post title and description -->
       <h2
-        class="text-xl font-bold mb-2 text-gray-900 hover:text-indigo-500 transition-colors duration-300 cursor-pointer"
+        class="text-3xl font-bold mb-2 text-gray-900 cursor-pointer"
       >
         {{ post.title }}
       </h2>
-      <p class="text-gray-700 mb-4">{{ post.description || post.subtitle || '' }}</p>
+      <p class="text-gray-700 mb-4 text-lg">{{ post.description || post.subtitle || '' }}</p>
 
       <!-- Post stats -->
       <div class="flex items-center text-sm text-gray-500 border-t pt-3">

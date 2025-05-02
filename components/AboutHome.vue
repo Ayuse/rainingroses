@@ -2,7 +2,7 @@
   <div class="about">
     <div class="about-container max-w-[1282px] w-[95%] mx-auto">
       <div
-        class="m-auto px-3 md:px-5 py-5 md:py-40 mt-12 md:mt-24 border-t-[#A09F9B] border-t-[1px] border-b-[1px] border-b-[#A09F9B] flex flex-col md:flex-row gap-4 justify-between items-center"
+        class="m-auto px-3 md:px-5 py-5 md:py-40 mt-12 md:mt-24 border-t-[#A09F9B] border-t-[1px] flex flex-col md:flex-row gap-4 justify-between items-center"
       >
         <div
           class="flex flex-col gap-4 bg-[#D9D9D9] rounded-[25px] border-[#212122] border w-full md:w-auto"

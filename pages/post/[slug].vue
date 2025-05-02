@@ -112,7 +112,7 @@ onMounted(() => {
         >
           {{ post.title }}
         </h1>
-        <p v-if="post.publishedAt" class="text-sm md:text-base text-gray-500">
+        <p v-if="post.publishedAt" class="text-sm md:text-base text-gray-500 font-[fantasy]">
           {{ getRelativeTime(post.publishedAt) }}
         </p>
       </div>
