@@ -71,8 +71,8 @@
 
                 <NuxtImg
                   src="/images/musings.jpeg"
-                  class="home-page-img w-full h-full"
-                  fit="contain"
+                  class="home-page-img w-full h-full object-cover"
+                  fit="cover"
                 />
               </div>
             </NuxtLink>
@@ -105,7 +105,7 @@
                 </div>
                 <NuxtImg
                   src="/images/fictional.jpeg"
-                  class="home-page-img w-full h-full"
+                  class="home-page-img w-full h-full object-cover"
                   fit="contain"
                 />
               </div>
@@ -139,7 +139,7 @@
                 </div>
                 <NuxtImg
                   src="/images/vault.jpeg"
-                  class="home-page-img w-full h-full"
+                  class="home-page-img w-full h-full object-cover"
                   fit="contain"
                 />
               </div>
