@@ -9,32 +9,25 @@
 
     <!-- Mobile Navigation -->
     <div
-      class="fixed top-0 left-0 h-full w-3/4 max-w-[300px] bg-[#E6E3DC] z-50 transform transition-transform duration-300 ease-in-out shadow-xl"
-      :class="isMenuOpen ? 'translate-x-0' : '-translate-x-full'"
+      class="fixed inset-0 bg-[#E6E3DC] z-50 transform transition-opacity duration-300 ease-in-out flex flex-col text-center items-center justify-center"
+      :class="isMenuOpen ? 'opacity-100' : 'opacity-0 pointer-events-none'"
     >
-      <div class="p-6">
-        <button
-          @click="isMenuOpen = false"
-          class="absolute top-4 right-4 text-black flex items-center justify-center w-full"
-        >
-          <div
-            class="font-dancing mx-auto relative text-center w-[fit-content]"
-            data-scroll
-            data-scroll-speed="1"
-          >
-            <div
-              class="w-[50px] h-[50px] md:w-[80px] md:h-[80px] right-0 md:right-5"
-            >
-              <NuxtImg
+      <!-- Logo and Close Button at Top -->
+      <div class="absolute top-0 left-0 right-0 flex justify-center mt-8">
+        <div class="w-[50px] h-[50px] flex items-center justify-center ">
+          <NuxtImg
                 src="/images/rose.svg"
                 class="home-header-img"
                 fit="cover"
               />
-            </div>
-          </div>
+        </div>
+        <button
+          @click="isMenuOpen = false"
+          class="ml-3 w-[40px] h-[40px] flex items-center justify-center bg-gray-500/30 rounded-full"
+        >
           <svg
             xmlns="http://www.w3.org/2000/svg"
-            class="h-6 w-6"
+            class="h-5 w-5"
             fill="none"
             viewBox="0 0 24 24"
             stroke="currentColor"
@@ -47,20 +40,28 @@
             />
           </svg>
         </button>
-        <div
-          class="flex flex-col space-y-6 mt-12 font-italiana text-[24px] mobile-nav-link"
-        >
-          <nuxt-link to="/" @click="isMenuOpen = false">Home</nuxt-link>
-          <nuxt-link to="/diary" @click="isMenuOpen = false"
-            >Fictional Diary</nuxt-link
-          >
-          <nuxt-link to="/musings" @click="isMenuOpen = false"
-            >Musings</nuxt-link
-          >
-          <nuxt-link to="/vault" @click="isMenuOpen = false"
-            >Book Vault</nuxt-link
-          >
-          <nuxt-link to="/about" @click="isMenuOpen = false">About</nuxt-link>
+      </div>
+      
+      <!-- Navigation Links -->
+      <div class="font-italiana text-center">
+        <div class="flex flex-col space-y-6 mobile-nav-link">
+          <nuxt-link to="/" @click="isMenuOpen = false" class="text-[32px] ms-txt overflow-hidden">Home</nuxt-link>
+          <nuxt-link to="/diary" @click="isMenuOpen = false" class="text-[32px] ms-txt overflow-hidden">Fictional Diary</nuxt-link>
+          <nuxt-link to="/musings" @click="isMenuOpen = false" class="text-[32px] ms-txt overflow-hidden">Musings</nuxt-link>
+          <nuxt-link to="/vault" @click="isMenuOpen = false" class="text-[32px] ms-txt overflow-hidden">Book Vault</nuxt-link>
+          <nuxt-link to="/about" @click="isMenuOpen = false" class="text-[32px] ms-txt overflow-hidden">About</nuxt-link>
+        </div>
+      </div>
+      
+      <!-- Contact Information at Bottom -->
+      <div class="absolute bottom-10 left-0 right-0 flex justify-between px-10">
+        <div class="text-left text-[15px] space-y-1">
+          <div>Instagram</div>
+          <div>Twitter</div>
+        </div>
+        <div class="text-right text-[15px] space-y-1">
+          <div>raini</div>
+          <div>raini</div>
         </div>
       </div>
     </div>
@@ -111,8 +112,10 @@
 </template>
 <script setup>
 import gsap from "gsap";
-import { ref, onMounted, onUnmounted } from "vue";
+import { ref, onMounted, onUnmounted, watch } from "vue";
 import { useNuxtApp } from "#app";
+import { SplitText } from "gsap/SplitText";
+
 
 const isMenuOpen = ref(false);
 const showNav = ref(true);
@@ -125,28 +128,35 @@ const navAnimationPlayed = ref(false);
 // Get the animation bus
 const { $animBus, $lenis } = useNuxtApp();
 
-// Function to start nav animation
-const startNavAnimation = () => {
-  if (navAnimationPlayed.value) return;
+// Function to animate mobile menu links
+const animateMobileMenu = () => {
+  const splitTexts = document.querySelectorAll('.mobile-nav-link .ms-txt');
   
-  const navTl = gsap.timeline();
-  navTl.fromTo(
-    ".nav-link a",
-    {
-      y: -20,
-      opacity: 0,
-    },
-    {
-      y: 0,
-      opacity: 3,
-      duration: 0.5,
+  splitTexts.forEach((text) => {
+    // First ensure SplitText is initialized properly
+    const split = new SplitText(text, {
+      type: 'lines',
+      mask: "line",
+    });
+    
+    // Animate the split lines
+    gsap.from(split.lines, {
+      y: 100,
+      duration: 1,
+      ease: 'power2.inOut',
       stagger: 0.1,
-      ease: "power2.out",
-    }
-  );
-  
-  navAnimationPlayed.value = true;
+    });
+  });
 };
+
+// Watch for menu open state to trigger animation
+watch(isMenuOpen, (newValue) => {
+  if (newValue === true) {
+    animateMobileMenu()
+    // Small delay to ensure DOM is updated
+    // setTimeout(animateMobileMenu, 100);
+  }
+});
 
 const handleScroll = () => {
   // Get scroll position from Lenis if available, otherwise use window
@@ -184,6 +194,12 @@ onMounted(() => {
     // Fallback to window scroll events if Lenis is not available
     window.addEventListener("scroll", handleScroll, { passive: true });
   }
+
+  gsap.registerPlugin(SplitText);
+  const splitText = new SplitText(".ms-txt", {
+    type: 'lines',
+    mask: "line",
+  });
 });
 
 onUnmounted(() => {
@@ -197,6 +213,29 @@ onUnmounted(() => {
     window.removeEventListener("scroll", handleScroll);
   }
 });
+
+// Function to start nav animation
+const startNavAnimation = () => {
+  if (navAnimationPlayed.value) return;
+  
+  const navTl = gsap.timeline();
+  navTl.fromTo(
+    ".nav-link a",
+    {
+      y: -20,
+      opacity: 0,
+    },
+    {
+      y: 0,
+      opacity: 3,
+      duration: 0.5,
+      stagger: 0.1,
+      ease: "power2.out",
+    }
+  );
+  
+  navAnimationPlayed.value = true;
+};
 </script>
 
 <style>
@@ -235,16 +274,17 @@ body {
 .mobile-nav-link a {
   position: relative;
   text-decoration: none;
+  color: #212121;
 }
 
 .mobile-nav-link a::after {
   content: "";
   position: absolute;
   width: 0;
-  height: 3px;
-  bottom: -4px;
+  height: 1px;
+  bottom: -2px;
   left: 0;
-  background-color: #dbc9bd;
+  background-color: #212121;
   transition: width 0.3s ease;
 }
 
