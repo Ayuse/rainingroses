@@ -1,10 +1,11 @@
 <template>
   <div
-    class="max-w-[1204px] m-auto px-5 py-8 mt-14 md:mt-24 border-t-[#A09F9B] border-t-[1px] border-b-[1px] transition-all duration-300 page-view"
+    class="max-w-[1204px] m-auto px-4 py-6 sm:px-5 sm:py-8 mt-10 md:mt-24 border-t-[#A09F9B] border-t-[1px] border-b-[1px] transition-all duration-300 page-view"
   >
     <swiper
       :modules="[SwiperAutoplay, SwiperEffectCreative, SwiperPagination]"
       :slides-per-view="1" 
+      :space-between="16"
       :breakpoints="{
         640: {
           slidesPerView: 2,
@@ -22,29 +23,32 @@
       :autoplay="{ delay: 4000, disableOnInteraction: false }"
       :pagination="{ clickable: true }"
       :loop="true"
+      :touch-move-stoppable="true"
+      :grab-cursor="true"
       class="w-full"
     >
-      <swiper-slide v-for="(page, index) in pages" :key="index" class="flex-1">
+      <swiper-slide v-for="(page, index) in pages" :key="index" class="pb-4">
         <NuxtLink
           :to="`/post/${page.slug}`"
           class="block"
         >
           <div class="flex flex-col mb-2">
-            <h2 class="font-italiana font-light text-2xl sm:text-3xl text-[#3c3c3c]">{{ page.title }}</h2>
-            <p class="font-inter text-xs sm:text-sm font-light italic text-[#767676] mt-1">
+            <h2 class="font-italiana font-light text-xl sm:text-2xl md:text-3xl text-[#3c3c3c] line-clamp-2">{{ page.title }}</h2>
+            <p class="font-inter text-xs sm:text-sm font-light italic text-[#767676] mt-1 line-clamp-2">
               {{ page.subtitle }}
             </p>
           </div>
-          <div class="flex justify-end mb-3">
+          <div class="flex justify-end mb-2 sm:mb-3">
             <h3 class="font-inter text-xs sm:text-sm font-light italic text-[#767676]">
               {{ page.readTime }}
             </h3>
           </div>
-          <div class="overflow-hidden h-[250px] sm:h-[300px] hover:rounded-[8px]">
+          <div class="overflow-hidden h-[180px] xs:h-[220px] sm:h-[250px] md:h-[300px] rounded-[4px] sm:hover:rounded-[8px]">
             <NuxtImg
               :src="page.image"
               class="w-full object-cover h-full transition-all duration-300 image-reveal hover:scale-[1.05]"
               loading="lazy"
+              alt=""
             />
           </div>
         </NuxtLink>
@@ -150,6 +154,8 @@ onMounted(async () => {
   background-color: #A09F9B;
   opacity: 0.7;
   margin: 0 4px;
+  width: 8px;
+  height: 8px;
 }
 
 :deep(.swiper-pagination-bullet-active) {
@@ -163,5 +169,17 @@ onMounted(async () => {
 
 :deep(.swiper-pagination) {
   bottom: 0;
+}
+
+@media (max-width: 640px) {
+  :deep(.swiper-pagination-bullet) {
+    width: 6px;
+    height: 6px;
+    margin: 0 3px;
+  }
+  
+  :deep(.swiper) {
+    padding-bottom: 30px;
+  }
 }
 </style>
