@@ -1,7 +1,7 @@
 <template>
   <NuxtLink
     :to="`/post/${post.slug}`"
-    class="bg-white/50 rounded-lg overflow-hidden mb-6 transition-shadow duration-300 hover:shadow-lg flex h-[350px]"
+    class="bg-white/50 rounded-lg overflow-hidden mb-6 transition-shadow duration-300 hover:shadow-lg flex h-[350px] animate-fade-in"
   >
     <!-- Post image -->
     <div class="overflow-hidden relative group w-[60%]">
@@ -20,11 +20,11 @@
 
       <!-- Post title and description -->
       <h2
-        class="text-3xl font-bold mb-2 text-gray-900 cursor-pointer"
+        class="text-3xl font-bold mb-2 text-gray-900 cursor-pointer ms-txt overflow-hidden"
       >
         {{ post.title }}
       </h2>
-      <p class="text-gray-700 mb-4 text-lg">{{ post.description || post.subtitle || '' }}</p>
+      <p class="text-gray-700 mb-4 text-lg ms-txt overflow-hidden">{{ post.description || post.subtitle || '' }}</p>
 
       <!-- Post stats -->
       <div class="flex items-center text-sm text-gray-500 border-t pt-3">
@@ -86,3 +86,22 @@ export default {
   },
 };
 </script>
+
+<style scoped>
+.animate-fade-in {
+  animation: fadeIn 0.6s ease-in-out;
+  animation-delay: 0.2s;
+  animation-fill-mode: backwards;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+</style>

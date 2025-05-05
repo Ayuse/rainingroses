@@ -18,7 +18,7 @@
         <!-- Content Section -->
         <div class="md:col-span-2 mt-8 md:mt-0">
           <h1
-            class="font-italiana text-[32px] sm:text-[40px] md:text-[60px] mb-6 sm:mb-8"
+            class="font-italiana text-[32px] sm:text-[40px] md:text-[60px] mb-6 sm:mb-8 ms-txt overflow-hidden"
           >
             All About Me
           </h1>
@@ -26,14 +26,14 @@
           <div
             class="font-inter text-[16px] sm:text-[18px] md:text-[20px] font-light leading-relaxed space-y-4 sm:space-y-6"
           >
-            <p>
+            <p class="ms-txt overflow-hidden">
               Tola is a spirited girl from Ajah, Lagos, who loves to share her
               thoughts on the everyday moments that inspire her. With a degree
               in Economics and Finance and a career in Accounting, she's diving
               into her artistic side, exploring new hobbies, and embracing the
               joy of spontaneity.
             </p>
-            <p>
+            <p class="ms-txt overflow-hidden">
               An avid reader, Tola invites you to check out her book vault and
               resources page, where she shares her favorite reads and welcomes
               your recommendations. Join her as she navigates life, one random
@@ -41,11 +41,11 @@
             </p>
 
             <h2
-              class="font-italiana text-[24px] sm:text-[28px] md:text-[40px] mt-10 sm:mt-12 mb-3 sm:mb-4"
+              class="font-italiana text-[24px] sm:text-[28px] md:text-[40px] mt-10 sm:mt-12 mb-3 sm:mb-4 ms-txt overflow-hidden"
             >
               Why Does Tola Write?
             </h2>
-            <p>
+            <p class="ms-txt overflow-hidden">
               Writing has always been Tola's way of making sense of the world.
               It's a space where she can process her thoughts, explore new
               ideas, and connect with others who might be experiencing similar
@@ -55,24 +55,24 @@
 
             <div class="mt-10 sm:mt-12 pt-6 sm:pt-8 border-t border-[#A09F9B]">
               <h3
-                class="font-italiana text-[22px] sm:text-[24px] md:text-[32px] mb-3 sm:mb-4"
+                class="font-italiana text-[22px] sm:text-[24px] md:text-[32px] mb-3 sm:mb-4 ms-txt overflow-hidden"
               >
                 Connect With Me
               </h3>
               <div class="flex flex-wrap gap-y-2 gap-x-6">
                 <a
                   href="#"
-                  class="text-[#212122] hover:opacity-70 transition-opacity text-[16px] sm:text-[18px]"
+                  class="text-[#212122] hover:opacity-70 transition-opacity text-[16px] sm:text-[18px] ms-txt overflow-hidden"
                   >Instagram</a
                 >
                 <a
                   href="#"
-                  class="text-[#212122] hover:opacity-70 transition-opacity text-[16px] sm:text-[18px]"
+                  class="text-[#212122] hover:opacity-70 transition-opacity text-[16px] sm:text-[18px] ms-txt overflow-hidden"
                   >Twitter</a
                 >
                 <a
                   href="#"
-                  class="text-[#212122] hover:opacity-70 transition-opacity text-[16px] sm:text-[18px]"
+                  class="text-[#212122] hover:opacity-70 transition-opacity text-[16px] sm:text-[18px] ms-txt overflow-hidden"
                   >Email</a
                 >
               </div>
@@ -114,6 +114,7 @@
 import { gsap } from 'gsap';
 import { InertiaPlugin } from 'gsap/InertiaPlugin';
 import { onMounted } from 'vue';
+import { SplitText } from "gsap/SplitText";
 
 useHead({
   title: "About Tola | Raining Roses",
@@ -127,6 +128,19 @@ useHead({
 });
 
 onMounted(() => {
+  gsap.registerPlugin(SplitText);
+  const splitText = new SplitText(".ms-txt", {
+    type: 'lines,',
+    mask: "line",
+    onSplit: (self) => {
+     gsap.from(self.lines,{
+      y: 100,
+      duration: 1,
+      ease: 'power2.inOut',
+      stagger: 0.1,
+     })
+    }
+  });
     gsap.registerPlugin(InertiaPlugin);
 
     let oldX = 0, 

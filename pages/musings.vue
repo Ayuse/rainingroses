@@ -5,8 +5,8 @@
     <div class="max-w-3xl mx-auto">
       <!-- Header with consistent styling -->
       <div class="border-b border-gray-300 pb-4 mb-8">
-        <h1 class="text-3xl font-bold text-gray-900">Musings</h1>
-        <p class="text-sm text-gray-500 mt-2">
+        <h1 class="text-3xl font-bold text-gray-900 ms-txt overflow-hidden">Musings</h1>
+        <p class="text-sm text-gray-500 mt-2 ms-txt overflow-hidden">
           Thoughts, ideas, and random reflections
         </p>
       </div>
@@ -47,7 +47,9 @@
 
 <script setup>
 import { ref, onMounted, onBeforeUnmount } from 'vue';
+import { SplitText } from "gsap/SplitText";
 import PostCard from "@/components/PostCard.vue";
+import { gsap } from "gsap";
 
 // Define the GROQ query to fetch posts with musings tag
 const MUSINGS_QUERY = groq`*[_type == "blogType" && "musings" in tags] | order(publishedAt desc) {
@@ -69,11 +71,24 @@ const noMorePosts = ref(false);
 const observer = ref(null);
 const observerTarget = ref(null);
 
+
 // Fetch posts from Sanity
 const { data: postsData } = await useSanityQuery(MUSINGS_QUERY);
 
 // Process the fetched data
-onMounted(() => {
+onMounted(() => {gsap.registerPlugin(SplitText);
+  const splitText = new SplitText(".ms-txt", {
+    type: 'lines',
+    mask: "line",
+    onSplit: (self) => {
+     gsap.from(self.lines,{
+      y: 100,
+      duration: 1,
+      ease: 'power2.inOut',
+      stagger: 0.1,
+     })
+    }
+  });
   try {
     allPosts.value = postsData.value.map((post) => ({
       title: post.title,
