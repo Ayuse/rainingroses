@@ -37,13 +37,13 @@
           </div>
         </div>
 
-        <div class="mt-20">
+        <div class="mt-10 md:mt-20">
           <div
-            class="flex flex-col md:flex-row items-center justify-between gap-4"
+            class="flex flex-col md:flex-row items-center justify-between gap-6 md:gap-4"
           >
             <NuxtLink to="/musings" class="block w-full">
               <div
-                class="w-[100%] md:w-[385px] h-[463px] overflow-hidden md:mt-0 mt-5 rounded-lg relative page-card-container cursor-pointer"
+                class="w-[100%] md:w-[385px] h-[300px] md:h-[463px] overflow-hidden md:mt-0 mt-5 rounded-lg relative page-card-container cursor-pointer"
                 @mouseenter="handleMouseEnter"
                 @mouseleave="handleMouseLeave"
               >
@@ -51,18 +51,18 @@
                   class="absolute top-0 left-0 w-full h-full bg-black/20 hpi-overlay z-10"
                 ></div>
                 <div
-                  class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 flex flex-col z-20"
+                  class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 flex flex-col z-20 items-center w-full"
                 >
                   <div class="overflow-hidden">
                     <h2
-                      class="text-[96px] font-italiana text-white page-title flex items-center h-[120px]"
+                      class="text-[clamp(64px,8vw,96px)] font-italiana text-white page-title flex items-center h-[80px] md:h-[120px]"
                     >
                       Musings
                     </h2>
                   </div>
                   <div class="overflow-hidden">
                     <h3
-                      class="text-[16px] font-inter italic font-light text-white page-subheader"
+                      class="text-[14px] md:text-[16px] font-inter italic font-light text-white page-subheader text-center"
                     >
                       Fleeting thoughts, insights, and moments of inspirations.
                     </h3>
@@ -72,13 +72,13 @@
                 <NuxtImg
                   src="/images/musings.jpeg"
                   class="home-page-img w-full h-full"
-                  fit="cover"
+                  fit="contain"
                 />
               </div>
             </NuxtLink>
-            <NuxtLink to="/fictional" class="block w-full">
+            <NuxtLink to="/diary" class="block w-full">
               <div
-                class="w-[100%] md:w-[385px] h-[463px] overflow-hidden md:mt-0 mt-10 rounded-lg relative page-card-container cursor-pointer"
+                class="w-[100%] md:w-[385px] h-[300px] md:h-[463px] overflow-hidden md:mt-0 mt-10 rounded-lg relative page-card-container cursor-pointer"
                 @mouseenter="handleMouseEnter"
                 @mouseleave="handleMouseLeave"
               >
@@ -86,18 +86,18 @@
                   class="absolute top-0 left-0 w-full h-full bg-black/20 hpi-overlay z-10"
                 ></div>
                 <div
-                  class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 flex flex-col z-20"
+                  class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 flex flex-col z-20 items-center w-full"
                 >
-                  <div class="overflow-hidden">
+                  <div class="overflow-hidden ">
                     <h2
-                      class="text-[96px] font-italiana text-white page-title flex items-center h-[120px]"
+                      class="text-[clamp(64px,8vw,96px)] font-italiana text-white page-title flex items-center h-[80px] md:h-[120px]"
                     >
                       Fictional
                     </h2>
                   </div>
                   <div class="overflow-hidden">
                     <h3
-                      class="text-[16px] font-inter italic font-light text-white page-subheader"
+                      class="text-[14px] md:text-[16px] font-inter italic font-light text-white page-subheader text-center"
                     >
                       A collection of my thoughts and reflections
                     </h3>
@@ -106,13 +106,13 @@
                 <NuxtImg
                   src="/images/fictional.jpeg"
                   class="home-page-img w-full h-full"
-                  fit="cover"
+                  fit="contain"
                 />
               </div>
             </NuxtLink>
             <NuxtLink to="/vault" class="block w-full">
               <div
-                class="w-[100%] md:w-[385px] h-[463px] overflow-hidden md:mt-0 mt-10 rounded-lg relative page-card-container cursor-pointer"
+                class="w-[100%] md:w-[385px] h-[300px] md:h-[463px] overflow-hidden md:mt-0 mt-10 rounded-lg relative page-card-container cursor-pointer"
                 @mouseenter="handleMouseEnter"
                 @mouseleave="handleMouseLeave"
               >
@@ -120,18 +120,18 @@
                   class="absolute top-0 left-0 w-full h-full bg-black/20 hpi-overlay z-10"
                 ></div>
                 <div
-                  class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 flex flex-col z-20"
+                  class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 flex flex-col z-20 items-center w-full"
                 >
                   <div class="overflow-hidden">
                     <h2
-                      class="text-[96px] font-italiana text-white page-title flex items-center h-[120px]"
+                      class="text-[clamp(64px,8vw,96px)] font-italiana text-white page-title flex items-center h-[80px] md:h-[120px]"
                     >
                       Vault
                     </h2>
                   </div>
                   <div class="overflow-hidden">
                     <h3
-                      class="text-[16px] font-inter italic font-light text-white page-subheader"
+                      class="text-[14px] md:text-[16px] font-inter italic font-light text-white page-subheader text-center"
                     >
                       A collection of my thoughts and reflections
                     </h3>
@@ -140,7 +140,7 @@
                 <NuxtImg
                   src="/images/vault.jpeg"
                   class="home-page-img w-full h-full"
-                  fit="cover"
+                  fit="contain"
                 />
               </div>
             </NuxtLink>
