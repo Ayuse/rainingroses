@@ -9,7 +9,7 @@
 
     <!-- Mobile Navigation -->
     <div
-      class="fixed inset-0 bg-[#E6E3DC] z-50 transform transition-opacity duration-300 ease-in-out flex flex-col text-center items-center justify-center"
+      class="fixed inset-0 bg-[#E6E3DC] z-50 transform transition-opacity duration-300 ease-in-out flex flex-col text-center items-center justify-center nav-container-mobile"
       :class="isMenuOpen ? 'opacity-100' : 'opacity-0 pointer-events-none'"
     >
       <!-- Logo and Close Button at Top -->
@@ -320,5 +320,8 @@ body.menu-open {
 .bottom-radius {
   border-bottom-left-radius: 20px;
   border-bottom-right-radius: 20px;
+}
+.nav-container-mobile{
+  clip-path: inset(0.5rem round 2.5rem);
 }
 </style>
