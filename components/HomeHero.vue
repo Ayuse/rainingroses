@@ -39,11 +39,11 @@
 
         <div class="mt-10 md:mt-20">
           <div
-            class="flex flex-col md:flex-row items-center justify-between gap-6 md:gap-4"
+            class="grid grid-cols-1 md:grid-cols-1 lg:grid-cols-3 gap-6 md:gap-4"
           >
             <NuxtLink to="/musings" class="block w-full">
               <div
-                class="w-[100%] md:w-[385px] h-[300px] md:h-[463px] overflow-hidden md:mt-0 mt-5 rounded-lg relative page-card-container cursor-pointer"
+                class="w-full h-[300px] md:h-[463px] overflow-hidden rounded-lg relative page-card-container cursor-pointer"
                 @mouseenter="handleMouseEnter"
                 @mouseleave="handleMouseLeave"
               >
@@ -78,7 +78,7 @@
             </NuxtLink>
             <NuxtLink to="/diary" class="block w-full">
               <div
-                class="w-[100%] md:w-[385px] h-[300px] md:h-[463px] overflow-hidden md:mt-0 mt-10 rounded-lg relative page-card-container cursor-pointer"
+                class="w-full h-[300px] md:h-[463px] overflow-hidden mt-0 rounded-lg relative page-card-container cursor-pointer"
                 @mouseenter="handleMouseEnter"
                 @mouseleave="handleMouseLeave"
               >
@@ -112,7 +112,7 @@
             </NuxtLink>
             <NuxtLink to="/vault" class="block w-full">
               <div
-                class="w-[100%] md:w-[385px] h-[300px] md:h-[463px] overflow-hidden md:mt-0 mt-10 rounded-lg relative page-card-container cursor-pointer"
+                class="w-full h-[300px] md:h-[463px] overflow-hidden mt-0 rounded-lg relative page-card-container cursor-pointer"
                 @mouseenter="handleMouseEnter"
                 @mouseleave="handleMouseLeave"
               >
