@@ -9,8 +9,8 @@
 
     <!-- Mobile Navigation -->
     <div
-      class="fixed inset-0 bg-[#E6E3DC] z-50 transform transition-opacity duration-300 ease-in-out flex flex-col text-center items-center justify-center nav-container-mobile"
-      :class="isMenuOpen ? 'opacity-100' : 'opacity-0 pointer-events-none'"
+      class="fixed inset-0 bg-[#E6E3DC] z-50 transform transition-all duration-300 ease-in-out flex flex-col text-center items-center justify-center nav-container-mobile"
+      :class="isMenuOpen ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10 pointer-events-none'"
     >
       <!-- Logo and Close Button at Top -->
       <div class="absolute top-0 left-0 right-0 flex justify-center mt-8">
@@ -141,8 +141,8 @@ const animateMobileMenu = () => {
     
     // Animate the split lines
     gsap.from(split.lines, {
-      y: 100,
-      duration: 1,
+      y: "100%",
+      duration: 0.7,
       ease: 'power2.inOut',
       stagger: 0.1,
     });
@@ -153,8 +153,6 @@ const animateMobileMenu = () => {
 watch(isMenuOpen, (newValue) => {
   if (newValue === true) {
     animateMobileMenu()
-    // Small delay to ensure DOM is updated
-    // setTimeout(animateMobileMenu, 100);
   }
 });
 

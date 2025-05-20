@@ -16,7 +16,7 @@
               />
             </div>
             <div class="overflow-hidden text-[clamp(48px,8vw,96px)]">
-              <h1 class="home-header">Raining Roses</h1>
+              <h1 class="home-header font-madamegrettha">Raining Roses</h1>
             </div>
             <div class="overflow-hidden">
               <h2
