@@ -14,7 +14,7 @@
 
 <script setup>
 import { ref, onMounted, onUnmounted } from 'vue';
-import SplitType from "split-type";
+import SplitType from 'split-type';
 
 import { useNuxtApp } from '#app';
 import { useRoute, useRouter } from 'vue-router';
@@ -38,8 +38,8 @@ onMounted(() => {
   gsap.set(`.image-container`, { clipPath: 'inset(0 0 100% 0)' });
   // gsap.set(`.preloader-header`, { y: 0 });
   // gsap.set(`.preloader_container`, { y: '100%' });
-// Get current screen width
-const isMobile = window.innerWidth < 768; // Mobile breakpoint is typically 768px
+  // Get current screen width
+  const isMobile = window.innerWidth < 768; // Mobile breakpoint is typically 768px
   const pl = gsap.timeline({});
   const overlap = 0.5; // Seconds between animation starts
   pl.to(`.image-container `, {
@@ -74,150 +74,170 @@ const isMobile = window.innerWidth < 768; // Mobile breakpoint is typically 768p
     duration: 0.7,
     ease: 'customEase',
   });
-  pl.to(`.preloader-header`, {
-    y: 0,
-    duration: 1,
-    ease: 'customEase',
+  // SVG Draw Animation
+  gsap.set('.logo-preloader path', {
+    strokeDasharray: function (i, el) {
+      return el.getTotalLength();
+    },
+    strokeDashoffset: function (i, el) {
+      return el.getTotalLength();
+    },
+    stroke: '#E6E3DC',
+    strokeWidth: 1,
+    fill: 'transparent',
   });
+
+  pl.to('.logo-preloader path', {
+    strokeDashoffset: 0,
+    duration: 3,
+    ease: 'customEase',
+    // stagger: 0.1
+  }).to(
+    '.logo-preloader path',
+    {
+      fill: '#E6E3DC',
+      stroke: 'transparent',
+      duration: 1,
+      ease: 'power2.out',
+    },
+    '-=0.5'
+  );
   pl.to(`.preloader_container`, {
     y: '-100%',
-    duration: 1,
+    duration: 0.5,
     ease: 'customEase',
   });
-pl.fromTo(  
-  ".nav-links a",
-  {
-    y: -20,
-    opacity: 0,
-  },
-  {
-    y: 0,
-    opacity: 3,
-    duration: 0.5,
-    stagger: 0.1,
-    ease: "power2.out",
-  },
-
-);
-pl.fromTo(
-  ".rose-container",
-  {
-    y: -20,
-    opacity: 0,
-  },
-  {
-    y: 0,
-    opacity: 3,
-    duration: 0.5,
-    ease: "power2.out",
-  },
- 
-);
-pl.fromTo(
-  ".rose-bg",
-  {
-    scale: 1.5,
-    opacity: 0,
-  },
-  {
-    scale: 1,
-    opacity: 1,
-    duration: 1,
-    ease: "power2.out",
-  },
-"<"
-);
-
-// Split text using SplitType instead of SplitText
-const headerText = new SplitType(".home-header", { types: "chars" });
-const subheaderText = new SplitType(".home-subheader", { types: "words" });
-const pageTitles = new SplitType(".page-title", { types: "chars" });
-const pageSubheaders = new SplitType(".page-subheader", { types: "words" });
-
-pl.fromTo(
-  headerText.chars,
-  {
-    y: "100%",
-    opacity: 0,
-  },
-  {
-    y: 0,
-    opacity: 1,
-    duration: 1,
-    stagger: 0.05,
-    ease: "power2.inOut",
-  },
-  "<"
-);
-
-pl.fromTo(
-  subheaderText.words,
-  {
-    y: "100%",
-    opacity: 0,
-  },
-  {
-    y: 0,
-    opacity: 1,
-    duration: 0.8,
-    stagger: 0.03,
-    ease: "power2.inOut",
-  },
-  "<"
-);
-
-pl.fromTo(
-  [".home-page-img", ".hpi-overlay"],
-  {
-    scale: 1.2,
-    opacity: 0,
-  },
-  {
-    scale: 1,
-    stagger: 0.1,
-    opacity: 1,
-    duration: 1,
-    ease: "power2.out",
-  },
-  "< 0.2"
-);
-
-pl.fromTo(
-  pageTitles.chars,
-  {
-    y: "100%",
-    opacity: 0,
-  },
-  {
-    y: "0%",
-    opacity: 1,
-    stagger: 0.05,
-    duration: 0.7,
-    ease: "power4.out",
-  },
-  "< 0.2"
-);
-
-// Only run this animation on mobile screens
-if (isMobile) {
   pl.fromTo(
-    pageSubheaders.words,
+    '.nav-links a',
     {
-      y: "100%",
+      y: -20,
       opacity: 0,
-      filter: "blur(4px)",
     },
     {
-      y: "0%",
+      y: 0,
+      opacity: 3,
+      duration: 0.5,
+      stagger: 0.1,
+      ease: 'power2.out',
+    }
+  );
+  pl.fromTo(
+    '.rose-container',
+    {
+      y: -20,
+      opacity: 0,
+    },
+    {
+      y: 0,
+      opacity: 3,
+      duration: 0.5,
+      ease: 'power2.out',
+    }
+  );
+  pl.fromTo(
+    '.rose-bg',
+    {
+      scale: 1.5,
+      opacity: 0,
+    },
+    {
+      scale: 1,
       opacity: 1,
-      filter: "blur(0px)",
+      duration: 1,
+      ease: 'power2.out',
+    },
+    '<'
+  );
+
+  // Split text using SplitType instead of SplitText
+  const headerText = new SplitType('.home-header', { types: 'chars' });
+  const subheaderText = new SplitType('.home-subheader', { types: 'words' });
+  const pageTitles = new SplitType('.page-title', { types: 'chars' });
+  const pageSubheaders = new SplitType('.page-subheader', { types: 'words' });
+
+  pl.fromTo(
+    headerText.chars,
+    {
+      y: '100%',
+      opacity: 0,
+    },
+    {
+      y: 0,
+      opacity: 1,
+      duration: 1,
+      stagger: 0.05,
+      ease: 'power2.inOut',
+    },
+    '<'
+  );
+
+  pl.fromTo(
+    subheaderText.words,
+    {
+      y: '100%',
+      opacity: 0,
+    },
+    {
+      y: 0,
+      opacity: 1,
+      duration: 0.8,
+      stagger: 0.03,
+      ease: 'power2.inOut',
+    },
+    '<'
+  );
+
+  pl.fromTo(
+    ['.home-page-img', '.hpi-overlay'],
+    {
+      scale: 1.2,
+      opacity: 0,
+    },
+    {
+      scale: 1,
+      stagger: 0.1,
+      opacity: 1,
+      duration: 1,
+      ease: 'power2.out',
+    },
+    '< 0.2'
+  );
+
+  pl.fromTo(
+    pageTitles.chars,
+    {
+      y: '100%',
+      opacity: 0,
+    },
+    {
+      y: '0%',
+      opacity: 1,
       stagger: 0.05,
       duration: 0.7,
-      ease: "power4.out",
+      ease: 'power4.out',
     },
-    "< 0.2"
+    '< 0.2'
   );
-}
 
+  // Only run this animation on mobile screens
+  if (isMobile) {
+    pl.fromTo(
+      pageSubheaders.words,
+      {
+        y: '100%',
+        opacity: 0,
+        filter: 'blur(4px)',
+      },
+      {
+        y: '0%',
+        opacity: 1,
+        filter: 'blur(0px)',
+        stagger: 0.05,
+        duration: 0.7,
+        ease: 'power4.out',
+      },
+      '< 0.2'
+    );
+  }
 });
 </script>
