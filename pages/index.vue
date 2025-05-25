@@ -75,11 +75,6 @@ onMounted(() => {
     ease: 'customEase',
   });
   // SVG Draw Animation
-  gsap.set('.logo-preloader', {
-    opacity: 0,
-    visibility: 'hidden',
-  });
-  
   gsap.set('.logo-preloader path', {
     strokeDasharray: function (i, el) {
       return el.getTotalLength();
