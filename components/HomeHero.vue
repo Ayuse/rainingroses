@@ -6,7 +6,7 @@
           class="flex flex-col md:flex-row items-center justify-between mt-5 md:mt-[7rem]"
         >
           <div class="font-dancing text-[#212122] relative">
-            <div
+            <!-- <div
               class="absolute top-[-22px] w-[50px] h-[50px] md:w-[80px] md:h-[80px] right-0 md:right-5 rose-container"
             >
               <NuxtImg
@@ -14,9 +14,9 @@
                 class="home-header-img"
                 fit="cover"
               />
-            </div>
+            </div> -->
             <div class="overflow-hidden text-[clamp(48px,8vw,96px)]">
-              <h1 class="home-header font-madamegrettha">Raining Roses</h1>
+              <NuxtImg src="/images/logo-header.svg" class="home-header" fit="cover" />
             </div>
             <div class="overflow-hidden">
               <h2

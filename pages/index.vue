@@ -54,19 +54,19 @@ onMounted(() => {
     '/images/preload-img/img-4.png',
   ];
   //Loop through each image and apply the animation
-  images.forEach((_, index) => {
-    pl.fromTo(
-      `.image-wrapper:nth-child(${index + 1}) .image`,
-      { clipPath: 'inset(100% 0 0 0)', scale: 2 }, // Start with the image fully clipped (bottom to top)
-      {
-        clipPath: 'inset(0% 0 0 0)',
-        scale: 1,
-        duration: 0.9,
-        ease: 'customEase', // Use custom bezier curve
-      },
-      index * overlap // Delay the start of each animation based on the overlap
-    );
-  });
+  // images.forEach((_, index) => {
+  //   pl.fromTo(
+  //     `.image-wrapper:nth-child(${index + 1}) .image`,
+  //     { clipPath: 'inset(100% 0 0 0)', scale: 2 }, // Start with the image fully clipped (bottom to top)
+  //     {
+  //       clipPath: 'inset(0% 0 0 0)',
+  //       scale: 1,
+  //       duration: 0.9,
+  //       ease: 'customEase', // Use custom bezier curve
+  //     },
+  //     index * overlap // Delay the start of each animation based on the overlap
+  //   );
+  // });
 
   //Add the final clip animation for the last image
   pl.to(`.image-container`, {
@@ -75,6 +75,11 @@ onMounted(() => {
     ease: 'customEase',
   });
   // SVG Draw Animation
+  gsap.set('.logo-preloader', {
+    opacity: 0,
+    visibility: 'hidden',
+  });
+  
   gsap.set('.logo-preloader path', {
     strokeDasharray: function (i, el) {
       return el.getTotalLength();
@@ -156,16 +161,25 @@ onMounted(() => {
   const pageSubheaders = new SplitType('.page-subheader', { types: 'words' });
 
   pl.fromTo(
-    headerText.chars,
+    '.home-header',
     {
       y: '100%',
-      opacity: 0,
     },
     {
       y: 0,
-      opacity: 1,
       duration: 1,
-      stagger: 0.05,
+      ease: 'power2.inOut',
+    },
+    '<'
+  );
+  pl.fromTo(
+    '.home-header',
+    {
+      opacity: 0,
+    },
+    {
+      opacity: 1,
+      duration: 1.5,
       ease: 'power2.inOut',
     },
     '<'
