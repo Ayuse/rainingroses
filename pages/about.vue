@@ -5,9 +5,11 @@
         <!-- Image Section -->
         <div class="md:col-span-1">
           <div
-            class="bg-[#D9D9D9] rounded-[20px] sm:rounded-[25px] border border-[#212122] overflow-hidden max-w-[500px] mx-auto md:mx-0 h-[300px] sm:h-[350px] md:h-auto"
+            ref="imageContainer"
+            class="rounded-[20px] sm:rounded-[25px] overflow-hidden max-w-[500px] mx-auto md:mx-0 h-[300px] sm:h-[350px] md:h-auto mt-0 sm:mt-[80px]"
           >
             <img
+              ref="profileImage"
               src="/images/tola.png"
               alt="Tola"
               class="w-full h-full object-cover object-center"
@@ -18,13 +20,13 @@
         <!-- Content Section -->
         <div class="md:col-span-2 mt-8 md:mt-0">
           <h1
-            class="font-italiana text-[32px] sm:text-[40px] md:text-[60px] mb-6 sm:mb-8 ms-txt overflow-hidden"
+            class="font-italiana text-[32px] sm:text-[40px] md:text-[60px] ms-txt overflow-hidden"
           >
             All About Me
           </h1>
 
           <div
-            class="font-inter text-[16px] sm:text-[18px] md:text-[20px] font-light leading-relaxed space-y-4 sm:space-y-6"
+            class="font-inter text-[16px] sm:text-[18px] md:text-[20px] font-light leading-relaxed"
           >
             <p class="ms-txt overflow-hidden">
               Tola is a spirited girl from Ajah, Lagos, who loves to share her
@@ -41,7 +43,7 @@
             </p>
 
             <h2
-              class="font-italiana text-[24px] sm:text-[28px] md:text-[40px] mt-10 sm:mt-12 mb-3 sm:mb-4 ms-txt overflow-hidden"
+              class="font-italiana text-[24px] sm:text-[28px] md:text-[40px] mt-10 sm:mt-12 ms-txt overflow-hidden"
             >
               Why Does Tola Write?
             </h2>
@@ -53,7 +55,13 @@
               in everyday moments and embrace their own creativity.
             </p>
 
-            <div class="mt-10 sm:mt-12 pt-6 sm:pt-8 border-t border-[#A09F9B]">
+            <div class="mt-10 sm:mt-12 pt-6 sm:pt-8">
+              <!-- Animated horizontal line -->
+              <div 
+                ref="horizontalLine"
+                class="w-full h-[1px] bg-[#A09F9B] mb-6 sm:mb-8"
+              ></div>
+              
               <h3
                 class="font-italiana text-[22px] sm:text-[24px] md:text-[32px] mb-3 sm:mb-4 ms-txt overflow-hidden"
               >
@@ -80,7 +88,7 @@
           </div>
         </div>
       </div>
-      <div class="medias mwg_effect000 mt-10">
+      <!-- <div class="medias mwg_effect000 mt-10">
     <div class="media">
         <img src="/assets/images/01.jpeg" alt="">
     </div>
@@ -105,7 +113,7 @@
     <div class="media">
         <img src="/assets/images/01.jpeg" alt="">
     </div>
-</div>
+</div> -->
     </div>
   </div>
 </template>
@@ -113,8 +121,13 @@
 <script setup>
 import { gsap } from 'gsap';
 import { InertiaPlugin } from 'gsap/InertiaPlugin';
-import { onMounted } from 'vue';
+import { onMounted, ref } from 'vue';
 import { SplitText } from "gsap/SplitText";
+
+// Refs for the image animation
+const imageContainer = ref(null);
+const profileImage = ref(null);
+const horizontalLine = ref(null);
 
 useHead({
   title: "About Tola | Raining Roses",
@@ -129,9 +142,45 @@ useHead({
 
 onMounted(() => {
   gsap.registerPlugin(SplitText);
-  const splitText = new SplitText(".ms-txt", {
+
+  // Clip mask reveal animation for the profile image
+  if (imageContainer.value && profileImage.value) {
+    // Set initial clip path to hide the image (top to bottom) and scale
+    gsap.set(profileImage.value, {
+      clipPath: "inset(100% 0 0 0)",
+      scale: 1.1
+    });
+
+    // Animate the clip path to reveal the image from top to bottom with scale
+    gsap.to(profileImage.value, {
+      clipPath: "inset(0% 0 0 0)",
+      scale: 1,
+      duration: 1.8,
+      ease: "power4.out",
+      delay: 0.3
+    });
+  }
+
+  // Horizontal line reveal animation
+  if (horizontalLine.value) {
+    // Set initial state - line hidden (scaled to 0 width from left)
+    gsap.set(horizontalLine.value, {
+      scaleX: 0,
+      transformOrigin: "left center"
+    });
+
+    // Animate the line to reveal from left to right
+    gsap.to(horizontalLine.value, {
+      scaleX: 1,
+      duration: 1.2,
+      ease: "power3.out",
+      delay: 1.5 // Start after the image animation
+    });
+  }
+
+  SplitText.create(".ms-txt", {
     type: 'lines,',
-    mask: "line",
+    mask: "lines",
     onSplit: (self) => {
      gsap.from(self.lines,{
       y: 100,

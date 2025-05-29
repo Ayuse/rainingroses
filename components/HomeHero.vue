@@ -6,7 +6,7 @@
         <div
           class="flex items-center justify-between mt-5 md:mt-[7rem]"
         >
-          <div class="font-dancing text-[#212122] relative">
+          <div class="font-dancing text-[#212122] relative w-full">
             <!-- <div
               class="absolute top-[-22px] w-[50px] h-[50px] md:w-[80px] md:h-[80px] right-0 md:right-5 rose-container"
             >
@@ -16,8 +16,8 @@
                 fit="cover"
               />
             </div> -->
-            <div class="overflow-hidden text-[clamp(48px,8vw,96px)]">
-              <NuxtImg src="/images/logo-header.svg" class="home-header" fit="cover" />
+            <div class="overflow-hidden text-[clamp(48px,8vw,96px)] w-full flex justify-center">
+              <NuxtImg src="/images/logo-header.svg" class="home-header w-[80%]" fit="cover" />
             </div>
             <div class="overflow-hidden">
               <h2

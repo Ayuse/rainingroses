@@ -30,12 +30,12 @@
     </div>
 
     <div
-      class="font-dancing mx-auto relative text-center w-[fit-content]"
+      class="font-dancing mx-auto relative text-center w-[50%]"
       data-scroll
       data-scroll-speed="1"
     >
     <div class="overflow-hidden text-[clamp(48px,8vw,96px)]">
-              <NuxtImg src="/images/logo-header-lght.svg" class="home-header" fit="cover" />
+              <NuxtImg src="/images/logo-header-lght.svg" class="home-header w-full" fit="cover" />
             </div>
     </div>
     <!-- <div class="max-w-[1204px] px-5">
