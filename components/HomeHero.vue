@@ -17,9 +17,9 @@
               />
             </div> -->
             <div class="overflow-hidden text-[clamp(48px,8vw,96px)] w-full flex justify-center">
-              <NuxtImg src="/images/logo-header.svg" class="home-header w-[80%]" fit="cover" />
+              <NuxtImg src="/images/logo-header.svg" class="home-header w-[70%]" fit="cover" />
             </div>
-            <div class="overflow-hidden">
+            <div class="overflow-hidden w-[84%]">
               <h2
                 class="home-subheader font-italiana text-[clamp(16px,2vw,24px)] text-end"
               >

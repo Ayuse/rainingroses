@@ -115,7 +115,7 @@ import gsap from "gsap";
 import { ref, onMounted, onUnmounted, watch } from "vue";
 import { useNuxtApp } from "#app";
 import { SplitText } from "gsap/SplitText";
-
+import { useRoute } from "vue-router";
 
 const isMenuOpen = ref(false);
 const showNav = ref(true);
@@ -125,8 +125,9 @@ const scrollThreshold = 50; // Minimum scroll amount before showing/hiding
 // Reference to control whether navigation animation should be played
 const navAnimationPlayed = ref(false);
 
-// Get the animation bus
+// Get the animation bus and route
 const { $animBus, $lenis } = useNuxtApp();
+const route = useRoute();
 
 // Function to animate mobile menu links
 const animateMobileMenu = () => {
@@ -181,8 +182,12 @@ const handleScroll = () => {
 };
 
 onMounted(() => {
-  // Listen for the completion of HomeHero animation to start nav animation
-  $animBus.on('homehero:complete', startNavAnimation);
+  // For non-home pages, start nav animation immediately after a short delay
+  if (route.path !== '/') {
+    setTimeout(() => {
+      startNavAnimation();
+    }, 100);
+  }
   
   // If using Lenis, subscribe to its scroll event
   const lenis = $lenis();
@@ -202,8 +207,6 @@ onMounted(() => {
 
 onUnmounted(() => {
   // Clean up event listeners
-  $animBus.off('homehero:complete', startNavAnimation);
-  
   const lenis = $lenis();
   if (lenis) {
     lenis.off('scroll', handleScroll);
@@ -218,14 +221,14 @@ const startNavAnimation = () => {
   
   const navTl = gsap.timeline();
   navTl.fromTo(
-    ".nav-link a",
+    ['.nav-link','.nav-link a'],
     {
       y: -20,
       opacity: 0,
     },
     {
       y: 0,
-      opacity: 3,
+      opacity: 1,
       duration: 0.5,
       stagger: 0.1,
       ease: "power2.out",
@@ -234,6 +237,18 @@ const startNavAnimation = () => {
   
   navAnimationPlayed.value = true;
 };
+
+// Watch for route changes to reset animation state
+watch(() => route.path, (newPath) => {
+  navAnimationPlayed.value = false;
+  
+  // For non-home pages, start nav animation immediately after a short delay
+  if (newPath !== '/') {
+    setTimeout(() => {
+      startNavAnimation();
+    }, 100);
+  }
+});
 </script>
 
 <style>

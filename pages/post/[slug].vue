@@ -136,7 +136,7 @@ onMounted(() => {
 }
 
 .prose p {
-  @apply my-3 md:my-4 leading-relaxed;
+  @apply my-3 md:my-4 leading-relaxed font-inter text-black;
 }
 
 .prose a {

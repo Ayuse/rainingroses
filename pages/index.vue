@@ -27,6 +27,10 @@ import CustomEase from 'gsap/CustomEase';
 onMounted(() => {
   gsap.registerPlugin(CustomEase);
   CustomEase.create('customEase', '0.86,0,0.07,1');
+  
+  // Get the animation bus to emit events
+  const { $animBus } = useNuxtApp();
+  
   gsap.set(`.image-container`, { clipPath: 'inset(100% 0 0 0)' });
   gsap.set(`.image-wrapper .image`, {
     clipPath: 'inset(100% 0 0 0)',
@@ -120,6 +124,7 @@ onMounted(() => {
   pl.set('.preloader_container',{
     display: 'none',
   });
+  // Navigation animation runs right after preloader is hidden
   pl.fromTo(
     ['.nav-link','.nav-link a'],
     {
@@ -128,7 +133,7 @@ onMounted(() => {
     },
     {
       y: 0,
-      opacity: 3,
+      opacity: 1,
       duration: 0.5,
       stagger: 0.1,
       ease: 'power2.out',
