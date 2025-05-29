@@ -75,6 +75,10 @@ onMounted(() => {
     ease: 'customEase',
   });
   // SVG Draw Animation
+  gsap.set('.logo-preloader', {
+    opacity: 0,
+  });
+  
   gsap.set('.logo-preloader path', {
     strokeDasharray: function (i, el) {
       return el.getTotalLength();
@@ -86,7 +90,9 @@ onMounted(() => {
     strokeWidth: 1,
     fill: 'transparent',
   });
-
+  gsap.set('.logo-preloader', {
+    opacity: 1,
+  });
   pl.to('.logo-preloader path', {
     strokeDashoffset: 0,
     duration: 3,
@@ -98,17 +104,24 @@ onMounted(() => {
       fill: '#E6E3DC',
       stroke: 'transparent',
       duration: 1,
-      ease: 'power2.out',
+      ease: 'power2.inOut',
     },
     '-=0.5'
   );
-  pl.to(`.preloader_container`, {
-    y: '-100%',
+  pl.fromTo(`.preloader_container`, {
+    opacity: 1,
     duration: 0.5,
     ease: 'customEase',
+  },{
+    opacity: 0,
+    duration: 1,
+    ease: 'customEase',
+  },'>=0.5');
+  pl.set('.preloader_container',{
+    display: 'none',
   });
   pl.fromTo(
-    '.nav-links a',
+    ['.nav-link','.nav-link a'],
     {
       y: -20,
       opacity: 0,

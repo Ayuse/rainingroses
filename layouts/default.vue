@@ -14,9 +14,9 @@
     >
       <!-- Logo and Close Button at Top -->
       <div class="absolute top-0 left-0 right-0 flex justify-center mt-8">
-        <div class="w-[50px] h-[50px] flex items-center justify-center ">
+        <div class="w-[40px] h-[40px] flex items-center justify-center ">
           <NuxtImg
-                src="/images/rose.svg"
+                src="/images/logo-sm-drk.svg"
                 class="home-header-img"
                 fit="cover"
               />

@@ -2,8 +2,9 @@
   <div class="">
     <div class="bg-[#E6E3DC] m-auto px-5 md:px-10 h-full py-3 md:py-[10px] rounded-b-[30px] md:rounded-b-[60px]">
       <div class="max-w-[1200px] mx-auto">
+        <div class="h-screen">
         <div
-          class="flex flex-col md:flex-row items-center justify-between mt-5 md:mt-[7rem]"
+          class="flex items-center justify-between mt-5 md:mt-[7rem]"
         >
           <div class="font-dancing text-[#212122] relative">
             <!-- <div
@@ -26,7 +27,7 @@
               </h2>
             </div>
           </div>
-          <div
+          <!-- <div
             class="w-[80%] md:w-[50%] overflow-hidden rounded-full md:mt-0 mt-10"
           >
             <NuxtImg
@@ -34,7 +35,7 @@
               class="home-header-img w-full h-full rose-bg"
               fit="cover"
             />
-          </div>
+          </div> -->
         </div>
 
         <div class="mt-10 md:mt-20">
@@ -145,6 +146,7 @@
               </div>
             </NuxtLink>
           </div>
+        </div>
         </div>
         <PagesView />
         <AboutHome />
@@ -272,7 +274,9 @@ const handleMouseLeave = (event) => {
 /* .page-subheader {
   display: none;
 } */
-
+.logo-preloader {
+  opacity: 0;
+}
 .page-card-container .home-page-img {
   transform: scale(1);
 }
