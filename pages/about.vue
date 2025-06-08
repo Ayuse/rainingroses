@@ -1,5 +1,5 @@
 <template>
-  <div class="min-h-screen bg-[#E6E3DC] pt-16 sm:pt-20 md:pt-32 pb-16 sm:pb-20 rounded-b-[30px] md:rounded-b-[60px]">
+  <div class="min-h-screen bg-[#E6E3DC] dark:bg-[#1a1a1a] pt-16 sm:pt-20 md:pt-32 pb-16 sm:pb-20 rounded-b-[30px] md:rounded-b-[60px] transition-colors duration-300">
     <div class="max-w-[1282px] w-[92%] sm:w-[95%] mx-auto">
       <div class="grid grid-cols-1 md:grid-cols-3 gap-6 sm:gap-8 md:gap-12">
         <!-- Image Section -->
@@ -20,13 +20,13 @@
         <!-- Content Section -->
         <div class="md:col-span-2 mt-8 md:mt-0">
           <h1
-            class="font-italiana text-[32px] sm:text-[40px] md:text-[60px] ms-txt overflow-hidden"
+            class="font-italiana text-[32px] sm:text-[40px] md:text-[60px] ms-txt overflow-hidden text-[#212122] dark:text-[#f0f0f0] transition-colors duration-300"
           >
             All About Me
           </h1>
 
           <div
-            class="font-inter text-[16px] sm:text-[18px] md:text-[20px] font-light leading-relaxed"
+            class="font-inter text-[16px] sm:text-[18px] md:text-[20px] font-light leading-relaxed text-[#212122] dark:text-[#e5e5e5] transition-colors duration-300"
           >
             <p class="ms-txt overflow-hidden">
               Tola is a spirited girl from Ajah, Lagos, who loves to share her
@@ -43,7 +43,7 @@
             </p>
 
             <h2
-              class="font-italiana text-[24px] sm:text-[28px] md:text-[40px] mt-10 sm:mt-12 ms-txt overflow-hidden"
+              class="font-italiana text-[24px] sm:text-[28px] md:text-[40px] mt-10 sm:mt-12 ms-txt overflow-hidden text-[#212122] dark:text-[#f0f0f0] transition-colors duration-300"
             >
               Why Does Tola Write?
             </h2>
@@ -59,28 +59,28 @@
               <!-- Animated horizontal line -->
               <div 
                 ref="horizontalLine"
-                class="w-full h-[1px] bg-[#A09F9B] mb-6 sm:mb-8"
+                class="w-full h-[1px] bg-[#A09F9B] dark:bg-[#666666] mb-6 sm:mb-8 transition-colors duration-300"
               ></div>
               
               <h3
-                class="font-italiana text-[22px] sm:text-[24px] md:text-[32px] mb-3 sm:mb-4 ms-txt overflow-hidden"
+                class="font-italiana text-[22px] sm:text-[24px] md:text-[32px] mb-3 sm:mb-4 ms-txt overflow-hidden text-[#212122] dark:text-[#f0f0f0] transition-colors duration-300"
               >
                 Connect With Me
               </h3>
               <div class="flex flex-wrap gap-y-2 gap-x-6">
                 <a
                   href="#"
-                  class="text-[#212122] hover:opacity-70 transition-opacity text-[16px] sm:text-[18px] ms-txt overflow-hidden"
+                  class="text-[#212122] dark:text-[#e5e5e5] hover:opacity-70 transition-all duration-300 text-[16px] sm:text-[18px] ms-txt overflow-hidden"
                   >Instagram</a
                 >
                 <a
                   href="#"
-                  class="text-[#212122] hover:opacity-70 transition-opacity text-[16px] sm:text-[18px] ms-txt overflow-hidden"
+                  class="text-[#212122] dark:text-[#e5e5e5] hover:opacity-70 transition-all duration-300 text-[16px] sm:text-[18px] ms-txt overflow-hidden"
                   >Twitter</a
                 >
                 <a
                   href="#"
-                  class="text-[#212122] hover:opacity-70 transition-opacity text-[16px] sm:text-[18px] ms-txt overflow-hidden"
+                  class="text-[#212122] dark:text-[#e5e5e5] hover:opacity-70 transition-all duration-300 text-[16px] sm:text-[18px] ms-txt overflow-hidden"
                   >Email</a
                 >
               </div>

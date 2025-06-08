@@ -1,5 +1,5 @@
 <template>
-  <div class="h-full bg-[#E6E3DC] relative isolate">
+  <div class="h-full bg-[#E6E3DC] dark:bg-[#1a1a1a] relative isolate transition-colors duration-300">
     <!-- Mobile Menu Overlay -->
     <div
       class="fixed inset-0 bg-black/50 z-40 transition-opacity duration-300"
@@ -9,11 +9,11 @@
 
     <!-- Mobile Navigation -->
     <div
-      class="fixed inset-0 bg-[#E6E3DC] z-50 transform transition-all duration-300 ease-in-out flex flex-col text-center items-center justify-center nav-container-mobile"
+      class="fixed inset-0 bg-[#E6E3DC] dark:bg-[#1a1a1a] z-50 transform transition-all duration-300 ease-in-out flex flex-col text-center items-center justify-center nav-container-mobile"
       :class="isMenuOpen ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10 pointer-events-none'"
     >
-      <!-- Logo and Close Button at Top -->
-      <div class="absolute top-0 left-0 right-0 flex justify-center mt-8">
+      <!-- Logo and Buttons at Top -->
+      <div class="absolute top-0 left-0 right-0 flex justify-center items-center mt-8">
         <div class="w-[40px] h-[40px] flex items-center justify-center ">
           <NuxtImg
                 src="/images/logo-sm-drk.svg"
@@ -21,13 +21,14 @@
                 fit="cover"
               />
         </div>
+        <DarkModeToggle class="ml-3" />
         <button
           @click="isMenuOpen = false"
-          class="ml-3 w-[40px] h-[40px] flex items-center justify-center bg-gray-500/30 rounded-full"
+          class="ml-3 w-[40px] h-[40px] flex items-center justify-center bg-gray-500/30 dark:bg-gray-400/30 rounded-full"
         >
           <svg
             xmlns="http://www.w3.org/2000/svg"
-            class="h-5 w-5"
+            class="h-5 w-5 text-gray-800 dark:text-gray-200"
             fill="none"
             viewBox="0 0 24 24"
             stroke="currentColor"
@@ -45,52 +46,58 @@
       <!-- Navigation Links -->
       <div class="font-italiana text-center">
         <div class="flex flex-col space-y-6 mobile-nav-link">
-          <nuxt-link to="/" @click="isMenuOpen = false" class="text-[32px] ms-txt overflow-hidden">Home</nuxt-link>
-          <nuxt-link to="/diary" @click="isMenuOpen = false" class="text-[32px] ms-txt overflow-hidden">Fictional Diary</nuxt-link>
-          <nuxt-link to="/musings" @click="isMenuOpen = false" class="text-[32px] ms-txt overflow-hidden">Musings</nuxt-link>
-          <nuxt-link to="/vault" @click="isMenuOpen = false" class="text-[32px] ms-txt overflow-hidden">Book Vault</nuxt-link>
-          <nuxt-link to="/about" @click="isMenuOpen = false" class="text-[32px] ms-txt overflow-hidden">About</nuxt-link>
+          <nuxt-link to="/" @click="isMenuOpen = false" class="text-[32px] ms-txt overflow-hidden text-gray-800 dark:text-gray-200">Home</nuxt-link>
+          <nuxt-link to="/diary" @click="isMenuOpen = false" class="text-[32px] ms-txt overflow-hidden text-gray-800 dark:text-gray-200">Fictional Diary</nuxt-link>
+          <nuxt-link to="/musings" @click="isMenuOpen = false" class="text-[32px] ms-txt overflow-hidden text-gray-800 dark:text-gray-200">Musings</nuxt-link>
+          <nuxt-link to="/vault" @click="isMenuOpen = false" class="text-[32px] ms-txt overflow-hidden text-gray-800 dark:text-gray-200">Book Vault</nuxt-link>
+          <nuxt-link to="/about" @click="isMenuOpen = false" class="text-[32px] ms-txt overflow-hidden text-gray-800 dark:text-gray-200">About</nuxt-link>
         </div>
       </div>
       
       <!-- Contact Information at Bottom -->
       <div class="absolute bottom-10 left-0 right-0 flex justify-between px-10">
-        <div class="text-left text-[15px] space-y-1">
+        <div class="text-left text-[15px] space-y-1 text-gray-600 dark:text-gray-400">
           <div>Instagram</div>
           <div>Twitter</div>
         </div>
-        <div class="text-right text-[15px] space-y-1">
+        <div class="text-right text-[15px] space-y-1 text-gray-600 dark:text-gray-400">
           <div>raini</div>
           <div>raini</div>
         </div>
       </div>
     </div>
 
-    <!-- Hamburger Menu Button (Mobile Only) -->
-    <button
-      @click="isMenuOpen = !isMenuOpen"
-      class="fixed top-6 left-6 z-30 md:hidden"
-    >
-      <svg
-        xmlns="http://www.w3.org/2000/svg"
-        class="h-6 w-6"
-        fill="none"
-        viewBox="0 0 24 24"
-        stroke="currentColor"
+    <!-- Mobile Header Controls -->
+    <div class="fixed top-6 left-6 right-6 z-30 md:hidden flex justify-between items-center">
+      <!-- Hamburger Menu Button -->
+      <button
+        @click="isMenuOpen = !isMenuOpen"
+        class="text-gray-800 dark:text-gray-200"
       >
-        <path
-          stroke-linecap="round"
-          stroke-linejoin="round"
-          stroke-width="2"
-          d="M4 6h16M4 12h16M4 18h16"
-        />
-      </svg>
-    </button>
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          class="h-6 w-6"
+          fill="none"
+          viewBox="0 0 24 24"
+          stroke="currentColor"
+        >
+          <path
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            stroke-width="2"
+            d="M4 6h16M4 12h16M4 18h16"
+          />
+        </svg>
+      </button>
+      
+      <!-- Dark Mode Toggle for Mobile -->
+      <DarkModeToggle />
+    </div>
 
     <!-- Desktop Navigation -->
-    <div class="bg-[#E6E3DC]">
+    <div class="bg-[#E6E3DC] dark:bg-[#1a1a1a]">
     <nav
-      class="rounded-[30px] md:rounded-[60px] hidden md:flex justify-around text-[#000000] text-[20px] font-italiana max-w-[800px] m-auto nav-link fixed top-5 left-0 right-0 z-30 transition-transform duration-300 py-4 border border-[#f3f3f3]"
+      class="rounded-[30px] md:rounded-[60px] hidden md:flex justify-around items-center text-[#000000] dark:text-[#ffffff] text-[20px] font-italiana max-w-[800px] m-auto nav-link fixed top-5 left-0 right-0 z-30 transition-transform duration-300 py-4 border border-[#f3f3f3] dark:border-[#333333]"
       :class="{ 'translate-y-0': showNav, '-translate-y-full': !showNav }"
     >
       <nuxt-link to="/">Home</nuxt-link>
@@ -98,11 +105,12 @@
       <nuxt-link to="/musings">Musings</nuxt-link>
       <nuxt-link to="/vault">Book Vault</nuxt-link>
       <nuxt-link to="/about">About</nuxt-link>
+      <DarkModeToggle />
       <div class="w-full h-full absolute top-0 left-0 blur-sm z-[-1]"></div>
     </nav>
     </div>
     <!-- Page Content -->
-    <div class="bg-[#212122]">
+    <div class="bg-[#212122] dark:bg-[#111111] transition-colors duration-300">
       <slot />
     </div>
 
@@ -124,6 +132,9 @@ const scrollThreshold = 50; // Minimum scroll amount before showing/hiding
 
 // Reference to control whether navigation animation should be played
 const navAnimationPlayed = ref(false);
+
+// Dark mode functionality
+const { initDarkMode } = useDarkMode();
 
 // Get the animation bus and route
 const { $animBus, $lenis } = useNuxtApp();
@@ -182,6 +193,9 @@ const handleScroll = () => {
 };
 
 onMounted(() => {
+  // Initialize dark mode
+  initDarkMode();
+  
   // For non-home pages, start nav animation immediately after a short delay
   if (route.path !== '/') {
     setTimeout(() => {
@@ -268,8 +282,12 @@ watch(() => route.path, (newPath) => {
   background-color:#e6e3dc;
   opacity: 0.35;
   border-radius: inherit;
-
   z-index: -1;
+}
+
+.dark .nav-link::after{
+  background-color:#1a1a1a;
+  opacity: 0.8;
 }
 html, body {
   min-height: 100%;
@@ -290,6 +308,10 @@ body {
   color: #212121;
 }
 
+.dark .mobile-nav-link a {
+  color: #e5e5e5;
+}
+
 .mobile-nav-link a::after {
   content: "";
   position: absolute;
@@ -299,6 +321,10 @@ body {
   left: 0;
   background-color: #212121;
   transition: width 0.3s ease;
+}
+
+.dark .mobile-nav-link a::after {
+  background-color: #e5e5e5;
 }
 
 .mobile-nav-link a:hover::after {
@@ -321,7 +347,9 @@ body {
   transition: width 0.3s ease;
 }
 
-
+.dark .nav-link a::after {
+  background-color: #94a3b8;
+}
 
 .nav-link a:hover::after {
   width: 100%;

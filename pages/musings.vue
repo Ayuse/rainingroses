@@ -1,12 +1,12 @@
 <template>
   <div
-    class="min-h-screen bg-[#E6E3DC] py-[8rem] px-4 sm:px-6 lg:px-8 font-italiana rounded-b-[30px] md:rounded-b-[60px]"
+    class="min-h-screen bg-[#E6E3DC] dark:bg-[#1a1a1a] py-[8rem] px-4 sm:px-6 lg:px-8 font-italiana rounded-b-[30px] md:rounded-b-[60px] transition-colors duration-300"
   >
     <div class="max-w-3xl mx-auto">
       <!-- Header with consistent styling -->
-      <div class="border-b border-gray-300 pb-4 mb-8">
-        <h1 class="text-3xl font-bold text-gray-900 ms-txt overflow-hidden">Musings</h1>
-        <p class="text-sm text-gray-500 mt-2 ms-txt overflow-hidden">
+      <div class="border-b border-gray-300 dark:border-gray-600 pb-4 mb-8 transition-colors duration-300">
+        <h1 class="text-3xl font-bold text-gray-900 dark:text-gray-100 ms-txt overflow-hidden transition-colors duration-300">Musings</h1>
+        <p class="text-sm text-gray-500 dark:text-gray-400 mt-2 ms-txt overflow-hidden transition-colors duration-300">
           Thoughts, ideas, and random reflections
         </p>
       </div>
@@ -18,7 +18,7 @@
         <!-- Loading indicator -->
         <div v-if="isLoading" class="flex justify-center items-center py-4">
           <div
-            class="animate-spin rounded-full h-8 w-8 border-b-2 border-indigo-500"
+            class="animate-spin rounded-full h-8 w-8 border-b-2 border-indigo-500 dark:border-indigo-400"
           ></div>
         </div>
 
@@ -27,12 +27,12 @@
           v-if="noMorePosts && displayedPosts.length > 0"
           class="text-center py-4"
         >
-          <p class="text-gray-500 text-sm font-medium">
+          <p class="text-gray-500 dark:text-gray-400 text-sm font-medium transition-colors duration-300">
             You've reached the end of the content
           </p>
           <button
             @click="scrollToTop"
-            class="mt-2 px-4 py-2 text-sm font-medium text-white bg-indigo-500 rounded-md hover:bg-indigo-600 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
+            class="mt-2 px-4 py-2 text-sm font-medium text-white bg-indigo-500 dark:bg-indigo-600 rounded-md hover:bg-indigo-600 dark:hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 dark:focus:ring-indigo-400 transition-colors duration-300"
           >
             Back to top
           </button>

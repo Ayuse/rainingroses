@@ -2,10 +2,10 @@
   <div class="about">
     <div class="about-container max-w-[1282px] w-[95%] mx-auto">
       <div
-        class="m-auto px-3 md:px-5 py-5 md:py-40 mt-12 md:mt-24 border-t-[#A09F9B] border-t-[1px] flex flex-col md:flex-row gap-4 justify-between items-center"
+        class="m-auto px-3 md:px-5 py-5 md:py-40 mt-12 md:mt-24 border-t-[#A09F9B] dark:border-t-[#555555] border-t-[1px] flex flex-col md:flex-row gap-4 justify-between items-center transition-colors duration-300"
       >
         <div
-          class="flex flex-col gap-4 bg-[#D9D9D9] rounded-[25px] border-[#212122] border w-full md:w-auto"
+          class="flex flex-col gap-4 bg-[#D9D9D9] dark:bg-[#2a2a2a] rounded-[25px] border-[#212122] dark:border-[#555555] border w-full md:w-auto transition-colors duration-300"
         >
           <NuxtImg
             src="/images/tola.png"
@@ -13,7 +13,7 @@
             fit="cover"
           />
           <h2
-            class="font-italiana text-[24px] md:text-[32px] px-[20px] md:px-[29px] pb-[20px] md:pb-[30px] font-light"
+            class="font-italiana text-[24px] md:text-[32px] px-[20px] md:px-[29px] pb-[20px] md:pb-[30px] font-light text-gray-800 dark:text-gray-200 transition-colors duration-300"
           >
             About Tola
           </h2>
@@ -21,14 +21,14 @@
         <div class="flex flex-col gap-4 w-full md:w-1/2">
           <h2
             ref="splitText"
-            class="font-inter italic text-[28px] md:text-[40px] font-[200] leading-[40px] md:leading-[70px]"
+            class="font-inter italic text-[28px] md:text-[40px] font-[200] leading-[40px] md:leading-[70px] text-gray-800 dark:text-gray-200 transition-colors duration-300"
           >
             Tola is a spirited girl from Ajah, Lagos, who loves to share her
             thoughts on the everyday moments that inspire her.
           </h2>
           <NuxtLink
             to="/about"
-            class="font-italiana text-[24px] md:text-[30px] font-light relative w-fit after:content-[''] after:absolute after:left-0 after:bottom-0 after:h-[1px] after:w-0 after:bg-[#212122] after:transition-all after:duration-300 hover:after:w-full"
+            class="font-italiana text-[24px] md:text-[30px] font-light relative w-fit text-gray-800 dark:text-gray-200 after:content-[''] after:absolute after:left-0 after:bottom-0 after:h-[1px] after:w-0 after:bg-[#212122] dark:after:bg-[#f0f0f0] after:transition-all after:duration-300 hover:after:w-full transition-colors duration-300"
           >
             Read more
           </NuxtLink>

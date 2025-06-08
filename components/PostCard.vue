@@ -1,7 +1,7 @@
 <template>
   <NuxtLink
     :to="`/post/${post.slug}`"
-    class="bg-white/50 rounded-lg overflow-hidden mb-6 transition-shadow duration-300 hover:shadow-lg flex h-[350px] animate-fade-in"
+    class="bg-white/50 dark:bg-gray-800/50 rounded-lg overflow-hidden mb-6 transition-all duration-300 hover:shadow-lg dark:hover:shadow-gray-900/20 flex h-[350px] animate-fade-in border border-gray-200/30 dark:border-gray-700/30"
   >
     <!-- Post image -->
     <div class="overflow-hidden relative group w-[60%]">
@@ -20,14 +20,14 @@
 
       <!-- Post title and description -->
       <h2
-        class="text-3xl font-bold mb-2 text-gray-900 cursor-pointer ms-txt overflow-hidden"
+        class="text-3xl font-bold mb-2 text-gray-900 dark:text-gray-100 cursor-pointer ms-txt overflow-hidden transition-colors duration-300"
       >
         {{ post.title }}
       </h2>
-      <p class="text-gray-700 mb-4 text-lg ms-txt overflow-hidden">{{ post.description || post.subtitle || '' }}</p>
+      <p class="text-gray-700 dark:text-gray-300 mb-4 text-lg ms-txt overflow-hidden transition-colors duration-300">{{ post.description || post.subtitle || '' }}</p>
 
       <!-- Post stats -->
-      <div class="flex items-center text-sm text-gray-500 border-t pt-3">
+      <div class="flex items-center text-sm text-gray-500 dark:text-gray-400 border-t border-gray-200 dark:border-gray-600 pt-3 transition-colors duration-300">
         <div class="flex items-center">
           <svg
             xmlns="http://www.w3.org/2000/svg"
@@ -53,7 +53,7 @@
         </div>
         <div class="ml-auto flex items-center">
           <button
-            class="flex items-center text-gray-500 hover:text-red-500 transition-colors duration-300"
+            class="flex items-center text-gray-500 dark:text-gray-400 hover:text-red-500 dark:hover:text-red-400 transition-colors duration-300"
           >
             <svg
               xmlns="http://www.w3.org/2000/svg"

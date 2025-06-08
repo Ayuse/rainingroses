@@ -1,6 +1,6 @@
 <template>
   <div
-    class="max-w-[1204px] m-auto px-4 py-6 sm:px-5 sm:py-8 mt-10 md:mt-24 border-t-[#A09F9B] border-t-[1px] border-b-[1px] transition-all duration-300 page-view"
+    class="max-w-[1204px] m-auto px-4 py-6 sm:px-5 sm:py-8 mt-10 md:mt-24 border-t-[#A09F9B] dark:border-t-[#555555] border-t-[1px] border-b-[1px] dark:border-b-[#555555] transition-all duration-300 page-view"
   >
     <swiper
       :modules="[SwiperAutoplay, SwiperEffectCreative, SwiperPagination]"
@@ -33,13 +33,13 @@
           class="block"
         >
           <div class="flex flex-col mb-2">
-            <h2 class="font-italiana font-light text-xl sm:text-2xl md:text-3xl text-[#3c3c3c] line-clamp-2">{{ page.title }}</h2>
-            <p class="font-inter text-xs sm:text-sm font-light italic text-[#767676] mt-1 line-clamp-2">
+            <h2 class="font-italiana font-light text-xl sm:text-2xl md:text-3xl text-[#3c3c3c] dark:text-[#e0e0e0] line-clamp-2 transition-colors duration-300">{{ page.title }}</h2>
+            <p class="font-inter text-xs sm:text-sm font-light italic text-[#767676] dark:text-[#a0a0a0] mt-1 line-clamp-2 transition-colors duration-300">
               {{ page.subtitle }}
             </p>
           </div>
           <div class="flex justify-end mb-2 sm:mb-3">
-            <h3 class="font-inter text-xs sm:text-sm font-light italic text-[#767676]">
+            <h3 class="font-inter text-xs sm:text-sm font-light italic text-[#767676] dark:text-[#a0a0a0] transition-colors duration-300">
               {{ page.readTime }}
             </h3>
           </div>
@@ -158,9 +158,17 @@ onMounted(async () => {
   height: 8px;
 }
 
+:deep(.dark .swiper-pagination-bullet) {
+  background-color: #888888;
+}
+
 :deep(.swiper-pagination-bullet-active) {
   background-color: #A09F9B;
   opacity: 1;
+}
+
+:deep(.dark .swiper-pagination-bullet-active) {
+  background-color: #cccccc;
 }
 
 :deep(.swiper) {

@@ -1,6 +1,6 @@
 <template>
   <footer
-    class="bg-[#212122] text-[#E6E3DC] px-6 md:px-10 py-20 flex flex-col gap-10 sticky bottom-0 -z-10"
+    class="bg-[#212122] dark:bg-[#111111] text-[#E6E3DC] dark:text-[#f0f0f0] px-6 md:px-10 py-20 flex flex-col gap-10 sticky bottom-0 -z-10 transition-colors duration-300"
     data-scroll
     data-scroll-speed="-0.2"
   >
@@ -19,10 +19,10 @@
         <input
           type="text"
           placeholder="Your email"
-          class="bg-[#212122] border border-[#E6E3DC] rounded-[18px] pl-[20px] py-[16px] w-full text-[16px] font-inter placeholder:text-[#FBFAF2] max-w-[672px]"
+          class="bg-[#212122] dark:bg-[#111111] border border-[#E6E3DC] dark:border-[#444444] rounded-[18px] pl-[20px] py-[16px] w-full text-[16px] font-inter placeholder:text-[#FBFAF2] dark:placeholder:text-[#888888] max-w-[672px] text-[#E6E3DC] dark:text-[#f0f0f0] transition-colors duration-300"
         />
         <button
-          class="bg-[#E6E3DC] text-[#212122] px-4 py-[12px] font-inter font-light absolute right-[4.5px] rounded-[16px]"
+          class="bg-[#E6E3DC] dark:bg-[#f0f0f0] text-[#212122] dark:text-[#111111] px-4 py-[12px] font-inter font-light absolute right-[4.5px] rounded-[16px] transition-colors duration-300"
         >
           Subscribe
         </button>

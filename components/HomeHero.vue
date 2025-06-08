@@ -1,12 +1,12 @@
 <template>
   <div class="">
-    <div class="bg-[#E6E3DC] m-auto px-5 md:px-10 h-full py-3 md:py-[10px] rounded-b-[30px] md:rounded-b-[60px]">
+    <div class="bg-[#E6E3DC] dark:bg-[#1a1a1a] m-auto px-5 md:px-10 h-full py-3 md:py-[10px] rounded-b-[30px] md:rounded-b-[60px] transition-colors duration-300">
       <div class="max-w-[1200px] mx-auto">
         <div class="h-screen">
         <div
           class="flex items-center justify-between mt-5 md:mt-[7rem]"
         >
-          <div class="font-dancing text-[#212122] relative w-full">
+          <div class="font-dancing text-[#212122] dark:text-[#f0f0f0] relative w-full transition-colors duration-300">
             <!-- <div
               class="absolute top-[-22px] w-[50px] h-[50px] md:w-[80px] md:h-[80px] right-0 md:right-5 rose-container"
             >

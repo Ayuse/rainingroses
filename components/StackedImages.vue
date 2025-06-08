@@ -95,7 +95,6 @@
           class="image"
           preset="default"
           fit="cover"
-          @load="onImageLoad"
         />
       </div>
     </div>
