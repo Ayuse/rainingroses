@@ -60,6 +60,8 @@ onMounted(() => {
     stagger: 0.5,
   });
 
+  // Image trail effect - commented out
+  /*
   const container = document.querySelector('.about');
   console.log('Container found:', container);
 
@@ -274,6 +276,7 @@ onMounted(() => {
   };
 
   animate();
+  */
 });
 </script>
 
