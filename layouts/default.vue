@@ -16,12 +16,14 @@
       <div class="absolute top-0 left-0 right-0 flex justify-center items-center mt-8">
         <div class="w-[40px] h-[40px] flex items-center justify-center ">
           <NuxtImg
-                src="/images/logo-sm-drk.svg"
+                :src="colorMode.value === 'dark' ? '/images/logo-sm-drk.svg' : '/images/logo-sm-text-drk.svg'"
                 class="home-header-img"
                 fit="cover"
               />
         </div>
-        <DarkModeToggle class="ml-3" />
+        <ClientOnly>
+          <DarkModeToggle class="ml-3" />
+        </ClientOnly>
         <button
           @click="isMenuOpen = false"
           class="ml-3 w-[40px] h-[40px] flex items-center justify-center bg-gray-500/30 dark:bg-gray-400/30 rounded-full"
@@ -91,21 +93,25 @@
       </button>
       
       <!-- Dark Mode Toggle for Mobile -->
-      <DarkModeToggle />
+      <ClientOnly>
+        <DarkModeToggle />
+      </ClientOnly>
     </div>
 
     <!-- Desktop Navigation -->
     <div class="bg-[#E6E3DC] dark:bg-[#1a1a1a]">
     <nav
-      class="rounded-[30px] md:rounded-[60px] hidden md:flex justify-around items-center text-[#000000] dark:text-[#ffffff] text-[20px] font-italiana max-w-[800px] m-auto nav-link fixed top-5 left-0 right-0 z-30 transition-transform duration-300 py-4 border border-[#f3f3f3] dark:border-[#333333]"
-      :class="{ 'translate-y-0': showNav, '-translate-y-full': !showNav }"
+      class="rounded-[30px] md:rounded-[60px] hidden md:flex justify-around items-center text-[#000000] dark:text-[#ffffff] text-[20px] font-italiana max-w-[800px] m-auto nav-link fixed top-5 left-0 right-0 z-30 transition-all duration-500 ease-in-out py-4 border border-[#f3f3f3] dark:border-[#333333]"
+      :class="{ 'translate-y-0 opacity-100': showNav, '-translate-y-full opacity-0': !showNav }"
     >
       <nuxt-link to="/">Home</nuxt-link>
       <nuxt-link to="/diary">Fictional Diary</nuxt-link>
       <nuxt-link to="/musings">Musings</nuxt-link>
       <nuxt-link to="/vault">Book Vault</nuxt-link>
       <nuxt-link to="/about">About</nuxt-link>
-      <DarkModeToggle />
+      <ClientOnly>
+        <DarkModeToggle />
+      </ClientOnly>
       <div class="w-full h-full absolute top-0 left-0 blur-sm z-[-1]"></div>
     </nav>
     </div>
@@ -125,16 +131,16 @@ import { useNuxtApp } from "#app";
 import { SplitText } from "gsap/SplitText";
 import { useRoute } from "vue-router";
 
+const colorMode = useColorMode();
 const isMenuOpen = ref(false);
 const showNav = ref(true);
 const lastScrollTop = ref(0);
-const scrollThreshold = 50; // Minimum scroll amount before showing/hiding
+const scrollThreshold = 30; // Minimum scroll amount before showing/hiding
+const scrollTimeout = ref(null);
+const showNavTimeout = ref(null);
 
 // Reference to control whether navigation animation should be played
 const navAnimationPlayed = ref(false);
-
-// Dark mode functionality
-const { initDarkMode } = useDarkMode();
 
 // Get the animation bus and route
 const { $animBus, $lenis } = useNuxtApp();
@@ -173,29 +179,59 @@ const handleScroll = () => {
   const lenis = $lenis();
   const currentScrollTop = lenis ? lenis.scroll : (window.scrollY || document.documentElement.scrollTop);
 
+  // Always show nav at the very top of the page
+  if (currentScrollTop <= 10) {
+    showNav.value = true;
+    lastScrollTop.value = currentScrollTop;
+    return;
+  }
+
   // Check if we've scrolled past threshold
   if (Math.abs(currentScrollTop - lastScrollTop.value) > scrollThreshold) {
-    // Scrolling down
-    if (currentScrollTop > lastScrollTop.value) {
+    // Scrolling down - hide nav
+    if (currentScrollTop > lastScrollTop.value && currentScrollTop > 100) {
       showNav.value = false;
     }
-    // Scrolling up
-    else {
+    // Scrolling up - show nav
+    else if (currentScrollTop < lastScrollTop.value) {
       showNav.value = true;
     }
     lastScrollTop.value = currentScrollTop;
   }
+};
 
-  // Always show nav at the top of the page
-  if (currentScrollTop <= 10) {
-    showNav.value = true;
+// Debounced scroll handler for better performance
+const debouncedHandleScroll = () => {
+  if (scrollTimeout.value) {
+    clearTimeout(scrollTimeout.value);
   }
+  
+  // Clear any pending show nav timeout
+  if (showNavTimeout.value) {
+    clearTimeout(showNavTimeout.value);
+  }
+  
+  // Call immediately for responsive feel
+  handleScroll();
+  
+  // Set timeout for cleanup and show nav after scrolling stops
+  scrollTimeout.value = setTimeout(() => {
+    scrollTimeout.value = null;
+    
+    // Show nav after user stops scrolling for a moment (except when at very top)
+    const lenis = $lenis();
+    const currentScrollTop = lenis ? lenis.scroll : (window.scrollY || document.documentElement.scrollTop);
+    
+    if (currentScrollTop > 10) {
+      showNavTimeout.value = setTimeout(() => {
+        showNav.value = true;
+        showNavTimeout.value = null;
+      }, 1000); // Show nav 1 second after scrolling stops
+    }
+  }, 150);
 };
 
 onMounted(() => {
-  // Initialize dark mode
-  initDarkMode();
-  
   // For non-home pages, start nav animation immediately after a short delay
   if (route.path !== '/') {
     setTimeout(() => {
@@ -206,10 +242,10 @@ onMounted(() => {
   // If using Lenis, subscribe to its scroll event
   const lenis = $lenis();
   if (lenis) {
-    lenis.on('scroll', handleScroll);
+    lenis.on('scroll', debouncedHandleScroll);
   } else {
     // Fallback to window scroll events if Lenis is not available
-    window.addEventListener("scroll", handleScroll, { passive: true });
+    window.addEventListener("scroll", debouncedHandleScroll, { passive: true });
   }
 
   gsap.registerPlugin(SplitText);
@@ -223,9 +259,17 @@ onUnmounted(() => {
   // Clean up event listeners
   const lenis = $lenis();
   if (lenis) {
-    lenis.off('scroll', handleScroll);
+    lenis.off('scroll', debouncedHandleScroll);
   } else {
-    window.removeEventListener("scroll", handleScroll);
+    window.removeEventListener("scroll", debouncedHandleScroll);
+  }
+  
+  // Clear any pending timeouts
+  if (scrollTimeout.value) {
+    clearTimeout(scrollTimeout.value);
+  }
+  if (showNavTimeout.value) {
+    clearTimeout(showNavTimeout.value);
   }
 });
 

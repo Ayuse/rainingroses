@@ -1,37 +1,44 @@
 <template>
-  <div :class="[
-    'min-h-screen font-italiana py-[8rem] transition-colors duration-300',
-    'bg-[#111111] text-white'
-  ]">
+  <div
+    class="min-h-screen bg-[#E6E3DC] dark:bg-[#1a1a1a] py-[8rem] px-4 sm:px-6 lg:px-8 font-italiana rounded-b-[30px] md:rounded-b-[60px] transition-colors duration-300"
+  >
     <!-- Header section with welcome message and image -->
-    <div class="container mx-auto px-4 py-8">
+    <div class="max-w-6xl mx-auto">
       <div
         class="flex flex-col md:flex-row items-center justify-between gap-8 pb-12"
       >
         <div class="w-full md:w-1/3"> 
-          <img
-            src="/images/tola.png"
-            alt="Welcome"
-            class="rounded-lg max-w-xs mx-auto shadow-lg"
-          />
+          <div
+            ref="imageContainer"
+            class="rounded-lg max-w-xs mx-auto shadow-lg overflow-hidden"
+          >
+            <img
+              ref="welcomeImage"
+              src="/images/tola.png"
+              alt="Welcome"
+              class="w-full h-full object-cover"
+            />
+          </div>
         </div>
         <div class="w-full md:w-2/3 space-y-4">
-          <h1 class="text-3xl font-bold">Welcome to My Book Vault!</h1>
-          <div class="h-0.5 w-16 my-4 bg-white/50"></div>
-          <p class="text-lg">
+          <div class="border-b border-gray-300 dark:border-gray-600 pb-4 mb-8 transition-colors duration-300">
+            <h1 class="text-3xl font-bold text-gray-900 dark:text-gray-100 transition-colors duration-300 ms-txt overflow-hidden">Welcome to My Book Vault!</h1>
+            <div ref="headerLine" class="h-0.5 w-16 my-4 bg-gray-300 dark:bg-gray-600 transition-colors duration-300"></div>
+          </div>
+          <p class="text-lg text-gray-700 dark:text-gray-300 transition-colors duration-300 ms-txt overflow-hidden">
             Inside, you'll discover a delightful mix of Romance, Thrillers,
             Drama, Domestic Fiction, and Educational Books. Enjoy browsing
             through the stories waiting to sweep you off your feet!
           </p>
-          <p class="text-lg mt-4">Thanks for visiting, and happy reading!</p>
+          <p class="text-lg mt-4 text-gray-700 dark:text-gray-300 transition-colors duration-300 ms-txt overflow-hidden">Thanks for visiting, and happy reading!</p>
         </div>
       </div>
     </div>
 
     <!-- Book collections in simple text grid -->
-    <div class="py-12 transition-colors duration-300 bg-[#f5eee3] dark:bg-[#1a1a1a] text-[#4a5d46] dark:text-gray-200">
-      <div class="container mx-auto px-4">
-        <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 md:gap-6 text-center">
+    <div class="py-12 transition-colors duration-300">
+      <div class="max-w-6xl mx-auto">
+        <div ref="booksGrid" class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 md:gap-6 text-center">
           <div class="book-title">THE LIST</div>
           <div class="book-title">WAHALA</div>
           <div class="book-title">MY SISTER THE SERIAL KILLER</div>
@@ -76,12 +83,15 @@
     </div>
 
     <!-- Additional book categories -->
-    <div class="pb-12 transition-colors duration-300 bg-[#f5eee3] dark:bg-[#1a1a1a] text-[#4a5d46] dark:text-gray-200">
-      <div class="container mx-auto px-4">
+    <div class="pb-12 transition-colors duration-300">
+      <div class="max-w-6xl mx-auto">
         <div class="text-center mb-8">
-          <h2 class="text-2xl font-bold mb-4">More Favorites</h2>
+          <div class="border-b border-gray-300 dark:border-gray-600 pb-4 mb-8 transition-colors duration-300">
+            <h2 class="text-2xl font-bold text-gray-900 dark:text-gray-100 transition-colors duration-300 ms-txt overflow-hidden">More Favorites</h2>
+            <div ref="favoritesLine" class="w-16 h-0.5 bg-gray-300 dark:bg-gray-600 mx-auto mt-4 transition-colors duration-300"></div>
+          </div>
         </div>
-        <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 md:gap-6 text-center">
+        <div ref="favoritesGrid" class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 md:gap-6 text-center">
           <div class="book-title">EDUCATED</div>
           <div class="book-title">BECOMING</div>
           <div class="book-title">THE SEVEN HUSBANDS OF EVELYN HUGO</div>
@@ -95,7 +105,119 @@
 </template>
 
 <script setup>
-// No need for custom dark mode implementation - using the navigation's dark mode system
+import { gsap } from 'gsap';
+import { onMounted, ref } from 'vue';
+import { SplitText } from "gsap/SplitText";
+
+// Refs for animations
+const imageContainer = ref(null);
+const welcomeImage = ref(null);
+const headerLine = ref(null);
+const favoritesLine = ref(null);
+const booksGrid = ref(null);
+const favoritesGrid = ref(null);
+
+onMounted(() => {
+  gsap.registerPlugin(SplitText);
+
+  // Image reveal animation
+  if (imageContainer.value && welcomeImage.value) {
+    // Set initial clip path to hide the image and scale
+    gsap.set(welcomeImage.value, {
+      clipPath: "inset(100% 0 0 0)",
+      scale: 1.1
+    });
+
+    // Animate the clip path to reveal the image from top to bottom
+    gsap.to(welcomeImage.value, {
+      clipPath: "inset(0% 0 0 0)",
+      scale: 1,
+      duration: 1.8,
+      ease: "power4.out",
+      delay: 0.3
+    });
+  }
+
+  // Header line animation
+  if (headerLine.value) {
+    gsap.set(headerLine.value, {
+      scaleX: 0,
+      transformOrigin: "left center"
+    });
+
+    gsap.to(headerLine.value, {
+      scaleX: 1,
+      duration: 1.2,
+      ease: "power3.out",
+      delay: 1.2
+    });
+  }
+
+  // Favorites line animation
+  if (favoritesLine.value) {
+    gsap.set(favoritesLine.value, {
+      scaleX: 0,
+      transformOrigin: "center center"
+    });
+
+    gsap.to(favoritesLine.value, {
+      scaleX: 1,
+      duration: 1.2,
+      ease: "power3.out",
+      delay: 2.5
+    });
+  }
+
+  // Text animations using SplitText
+  const splitText = new SplitText(".ms-txt", {
+    type: 'lines',
+    mask: "line",
+    onSplit: (self) => {
+      gsap.from(self.lines, {
+        y: 100,
+        duration: 1,
+        ease: 'power2.inOut',
+        stagger: 0.1,
+      });
+    }
+  });
+
+  // Book titles animation
+  if (booksGrid.value) {
+    const bookTitles = booksGrid.value.querySelectorAll('.book-title');
+    gsap.set(bookTitles, {
+      opacity: 0,
+      y: 30
+    });
+
+    gsap.to(bookTitles, {
+      opacity: 1,
+      y: 0,
+      duration: 0.2,
+      ease: "power2.out",
+      stagger: 0.05,
+      delay: 1.0
+    });
+  }
+
+  // Favorites grid animation
+  if (favoritesGrid.value) {
+    const favoritesTitles = favoritesGrid.value.querySelectorAll('.book-title');
+    gsap.set(favoritesTitles, {
+      opacity: 0,
+      y: 30
+    });
+
+    gsap.to(favoritesTitles, {
+      opacity: 1,
+      y: 0,
+      duration: 0.8,
+      ease: "power2.out",
+      stagger: 0.1,
+      delay: 3.0
+    });
+  }
+});
 </script>
 
 <style scoped>
@@ -107,7 +229,7 @@
   text-transform: uppercase;
   transition: all 0.3s ease;
   cursor: pointer;
-  color: #4a5d46;
+  color: #374151;
   border-radius: 0.25rem;
 }
 

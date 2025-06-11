@@ -10,10 +10,21 @@ export default defineNuxtConfig({
     "@nuxt/image",
     "nuxt-locomotive-scroll",
     "@nuxtjs/sanity",
+    "@nuxtjs/color-mode",
   ],
   sanity: {
     projectId: "eg0gyf3y",
     dataset: "production",
+  },
+  colorMode: {
+    preference: 'system', // default value of $colorMode.preference
+    fallback: 'light', // fallback value if not system preference found
+    hid: 'nuxt-color-mode-script',
+    globalName: '__NUXT_COLOR_MODE__',
+    componentName: 'ColorScheme',
+    classPrefix: '',
+    classSuffix: '',
+    storageKey: 'nuxt-color-mode'
   },
   image: {
     presets: {

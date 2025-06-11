@@ -2,7 +2,7 @@
   <div class="">
     <div class="bg-[#E6E3DC] dark:bg-[#1a1a1a] m-auto px-5 md:px-10 h-full py-3 md:py-[10px] rounded-b-[30px] md:rounded-b-[60px] transition-colors duration-300">
       <div class="max-w-[1200px] mx-auto">
-        <div class="h-screen">
+        <div>
         <div
           class="flex items-center justify-between mt-5 md:mt-[7rem]"
         >
@@ -17,7 +17,12 @@
               />
             </div> -->
             <div class="overflow-hidden text-[clamp(48px,8vw,96px)] w-full flex justify-center">
-              <NuxtImg src="/images/logo-header.svg" class="home-header w-[70%]" fit="cover" />
+              <ClientOnly>
+                <NuxtImg :src="logoSrc" class="home-header w-[70%]" fit="cover" />
+                <template #fallback>
+                  <NuxtImg src="/images/logo-header-drk.svg" class="home-header w-[70%]" fit="cover" />
+                </template>
+              </ClientOnly>
             </div>
             <div class="overflow-hidden w-[84%]">
               <h2
@@ -155,6 +160,16 @@
   </div>
 </template>
 <script setup>
+import { gsap } from 'gsap';
+import SplitType from "split-type";
+
+const colorMode = useColorMode();
+const logoSrc = computed(() =>
+  colorMode.value === "dark"
+    ? "/images/logo-header-lght.svg"
+    : "/images/logo-header-drk.svg"
+);
+
 useHead({
   title: "Raining Roses",
   meta: [
@@ -164,8 +179,6 @@ useHead({
     },
   ],
 });
-import { gsap } from 'gsap';
-import SplitType from "split-type";
 
 onMounted(() => {
 

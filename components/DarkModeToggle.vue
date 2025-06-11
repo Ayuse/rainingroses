@@ -1,7 +1,7 @@
 <template>
   <button
     @click="toggleDarkMode"
-    class="w-10 h-10 flex items-center justify-center rounded-full bg-white/20 dark:bg-black/20 backdrop-blur-sm border border-gray-200/30 dark:border-gray-700/30 transition-all duration-300 hover:scale-110 hover:bg-white/30 dark:hover:bg-black/30"
+    class="w-10 h-10 flex items-center justify-center rounded-full bg-white/40 dark:bg-black/20 backdrop-blur-sm border border-gray-200/30 dark:border-gray-700/80 transition-all duration-300 hover:scale-110 hover:bg-white/30 dark:hover:bg-black/30"
     :title="isDark ? 'Switch to light mode' : 'Switch to dark mode'"
   >
     <div class="relative w-5 h-5">
@@ -45,5 +45,11 @@
 </template>
 
 <script setup>
-const { isDark, toggleDarkMode } = useDarkMode()
+const colorMode = useColorMode()
+
+const isDark = computed(() => colorMode.value === 'dark')
+
+const toggleDarkMode = () => {
+  colorMode.preference = colorMode.value === 'dark' ? 'light' : 'dark'
+}
 </script> 

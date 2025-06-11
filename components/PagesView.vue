@@ -1,6 +1,6 @@
 <template>
   <div
-    class="max-w-[1204px] m-auto px-4 py-6 sm:px-5 sm:py-8 mt-10 md:mt-24 border-t-[#A09F9B] dark:border-t-[#555555] border-t-[1px] border-b-[1px] dark:border-b-[#555555] transition-all duration-300 page-view"
+    class="max-w-[1204px] md:pt-[120px] pt-[60px] m-auto px-4 py-6 sm:px-5 sm:py-8 mt-10 md:mt-24 border-t-[#A09F9B] dark:border-t-[#555555] border-t-[1px] transition-all duration-300 page-view"
   >
     <swiper
       :modules="[SwiperAutoplay, SwiperEffectCreative, SwiperPagination]"
@@ -43,7 +43,7 @@
               {{ page.readTime }}
             </h3>
           </div>
-          <div class="overflow-hidden h-[180px] xs:h-[220px] sm:h-[250px] md:h-[300px] rounded-[4px] sm:hover:rounded-[8px]">
+          <div class="overflow-hidden h-[180px] xs:h-[220px] sm:h-[250px] md:h-[400px] rounded-[4px] sm:hover:rounded-[8px]">
             <NuxtImg
               :src="page.image"
               class="w-full object-cover h-full transition-all duration-300 image-reveal hover:scale-[1.05]"
