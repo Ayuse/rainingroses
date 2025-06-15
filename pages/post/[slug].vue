@@ -69,7 +69,7 @@ onMounted(() => {
 </script>
 
 <template>
-  <div class="bg-post dark:bg-post-dark min-h-screen pt-20 transition-colors duration-300"> 
+  <div class="bg-post min-h-screen pt-20 transition-colors duration-300"> 
     <main
       v-if="post"
       ref="mainContent"
@@ -194,6 +194,7 @@ onMounted(() => {
 }
 
 .bg-post {
+  background-color: #f1e7e7;
   background-image: url('/images/blog-bg3.png');
   background-size: cover;
   background-position: center;
@@ -202,8 +203,9 @@ onMounted(() => {
   border-bottom-right-radius: 60px;
 }
 
-.dark .bg-post-dark {
-  background-image: linear-gradient(rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.7)), url('/images/blog-bg3.png');
+.dark .bg-post {
+  background-color: #111111;
+  background-image: url('/images/blog-bg3.png');
   background-size: cover;
   background-position: center;
   background-attachment: fixed;
@@ -213,7 +215,7 @@ onMounted(() => {
 
 @media (max-width: 768px) {
   .bg-post,
-  .dark .bg-post-dark {
+  .dark .bg-post {
     border-bottom-left-radius: 30px;
     border-bottom-right-radius: 30px;
   }
